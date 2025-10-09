@@ -9,11 +9,11 @@ class LetStatement : public Statement
 {
 public:
 	virtual std::string token_literal();
-	explicit LetStatement(Token token) : token(token), ident(), value() {}
-	void set_ident(Token token, std::string identifier_name);
+	explicit LetStatement(Token token) : token(token), ident(nullptr), value(nullptr) {}
+
+	std::unique_ptr<Identifier> ident;
 
 private:
 	Token token; // the "LET" token
-	Identifier ident;
 	std::unique_ptr<Expression> value;
 };

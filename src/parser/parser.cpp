@@ -11,6 +11,11 @@ std::unique_ptr<Program> Parser::parse_program()
 	std::unique_ptr<Program> program = std::make_unique<Program>();
 	while (current_token.type != TokenType::E_O_F)
 	{
+		std::unique_ptr<Statement> statement = parse_statement();
+		if (statement != nullptr)
+		{
+			program->statements.push_back(std::move(statement));
+		}
 	}
 	return program;
 }
@@ -37,7 +42,7 @@ std::unique_ptr<LetStatement> Parser::parse_let_statement()
 	}
 
 	// note that expect_peek() has advanced a token
-	statement->set_ident(current_token, current_token.literal);
+	statement->ident = std::make_unique<Identifier>(current_token, current_token.literal);
 
 	if (!expect_peek(TokenType::ASSIGN))
 	{

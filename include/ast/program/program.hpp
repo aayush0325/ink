@@ -3,6 +3,7 @@
 #include "ast/ast.hpp"
 #include <vector>
 #include <string>
+#include <memory>
 
 // program node, will be the root of our AST, implements the "Node" abstract class
 class Program : public Node
@@ -15,7 +16,6 @@ public:
 		statements.clear();
 	}
 
-private:
 	// each line will be a statement stored in this vector
-	std::vector<Statement> statements;
+	std::vector<std::unique_ptr<Statement>> statements;
 };
