@@ -16,6 +16,7 @@ std::unique_ptr<Program> Parser::parse_program()
 		{
 			program->statements.push_back(std::move(statement));
 		}
+		next_token();
 	}
 	return program;
 }
@@ -26,7 +27,6 @@ std::unique_ptr<Statement> Parser::parse_statement()
 	{
 	case TokenType::LET:
 		return parse_let_statement();
-		break;
 
 	default:
 		return nullptr;
@@ -50,8 +50,7 @@ std::unique_ptr<LetStatement> Parser::parse_let_statement()
 	}
 
 	// note that expect_peek() has advanced a token again
-
-	while (current_token.type != TokenType::E_O_F)
+	while (current_token.type != TokenType::SEMICOLON and current_token.type != TokenType::E_O_F)
 		next_token();
 
 	return statement;

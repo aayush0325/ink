@@ -22,8 +22,8 @@ class Parser
 public:
 	explicit Parser(std::unique_ptr<Lexer> l) : lexer(std::move(l))
 	{
-		lexer->next_token();
-		lexer->next_token();
+		current_token = lexer->next_token();
+		peek_token = lexer->next_token();
 	}
 
 	void next_token();

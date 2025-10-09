@@ -1,8 +1,10 @@
 #include "tests/lexer/test.hpp"
+#include "tests/parser/test.hpp"
 
 int main()
 {
 	test_basic_TokenType();
 	test_full_code();
 	test_code_complex();
+	test_let_statement_noexpr();
 }

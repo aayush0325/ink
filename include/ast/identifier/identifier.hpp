@@ -10,7 +10,6 @@ public:
 	Identifier(Token token, std::string identifier_name) : token(token), identifier_name(identifier_name) {}
 	Identifier() {}
 
-private:
 	Token token; // the "IDENT" token
 	std::string identifier_name;
 };
