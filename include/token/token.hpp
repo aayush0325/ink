@@ -3,6 +3,7 @@
 #include "types/types.hpp"
 #include <string>
 #include <map>
+#include <iostream>
 
 enum TokenType
 {
@@ -63,6 +64,9 @@ public:
 	{
 		return (type != a.type) or (literal != a.literal);
 	}
+
+	// enables std::cout << <SOMETOKEN>;
+	friend std::ostream &operator<<(std::ostream &os, const Token &tok);
 
 	static TokenType lookupIdent(const std::string &ident);
 };

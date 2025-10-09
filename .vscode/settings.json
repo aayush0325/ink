@@ -47,6 +47,7 @@
 		"stdexcept": "cpp",
 		"iostream": "cpp",
 		"istream": "cpp",
-		"typeindex": "cpp"
+		"typeindex": "cpp",
+		"map": "cpp"
 	},
 }

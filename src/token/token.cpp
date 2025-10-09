@@ -17,3 +17,9 @@ TokenType Token::lookupIdent(const std::string &ident)
 		return it->second;
 	return IDENT;
 }
+
+std::ostream &operator<<(std::ostream &os, const Token &tok)
+{
+	os << "{ " << tok.type << ", " << tok.literal << " }";
+	return os;
+}
