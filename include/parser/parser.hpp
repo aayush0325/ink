@@ -5,6 +5,7 @@
 #include "token/token.hpp"
 #include "ast/program/program.hpp"
 #include "ast/let_statement/let_statement.hpp"
+#include "ast/return_statement/return_statement.hpp"
 #include "ast/ast.hpp"
 
 class Parser
@@ -20,6 +21,8 @@ private:
 	std::unique_ptr<Statement> parse_statement();
 
 	std::unique_ptr<LetStatement> parse_let_statement();
+
+	std::unique_ptr<ReturnStatement> parse_return_statement();
 
 	void peek_error(const TokenType &t);
 

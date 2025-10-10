@@ -1,5 +1,4 @@
 #include "parser/parser.hpp"
-#include <format>
 
 void Parser::next_token()
 {
@@ -29,56 +28,9 @@ std::unique_ptr<Statement> Parser::parse_statement()
 	case TokenType::LET:
 		return parse_let_statement();
 
+	case TokenType::RETURN:
+		return parse_return_statement();
 	default:
 		return nullptr;
 	}
-}
-
-std::unique_ptr<LetStatement> Parser::parse_let_statement()
-{
-	std::unique_ptr<LetStatement> statement = std::make_unique<LetStatement>(current_token);
-	if (!expect_peek(TokenType::IDENT))
-	{
-		return nullptr;
-	}
-
-	// note that expect_peek() has advanced a token
-	statement->ident = std::make_unique<Identifier>(current_token, current_token.literal);
-
-	if (!expect_peek(TokenType::ASSIGN))
-	{
-		return nullptr;
-	}
-
-	// note that expect_peek() has advanced a token again
-	while (current_token.type != TokenType::SEMICOLON and current_token.type != TokenType::E_O_F)
-		next_token();
-
-	return statement;
-}
-
-bool Parser::expect_peek(const TokenType &t)
-{
-	if (peek_token.type == t)
-	{
-		next_token();
-		return true;
-	}
-	peek_error(t);
-	return false;
-}
-
-std::vector<std::string> Parser::get_errors()
-{
-	return errors;
-}
-
-void Parser::peek_error(const TokenType &t)
-{
-	std::string error = std::format(
-		"expected token type: {}, got {}",
-		static_cast<int>(t),				 // or your own to_string(t)
-		static_cast<int>(current_token.type) // assuming this is a std::string
-	);
-	errors.push_back(error);
 }

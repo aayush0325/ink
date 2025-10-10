@@ -7,4 +7,5 @@ int main()
 	test_full_code();
 	test_code_complex();
 	test_let_statement_noexpr();
+	test_return_statement();
 }

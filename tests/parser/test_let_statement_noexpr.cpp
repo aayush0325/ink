@@ -6,6 +6,33 @@
 #include "parser/parser.hpp"
 #include "ast/program/program.hpp"
 
+static void test_let_statement(const std::unique_ptr<Statement> &stmt, const std::string &expected_identifier_name, const int &tc)
+{
+	if (stmt->token_literal() != "let")
+	{
+		std::cout << "testcase: " << tc << " failed, expected let token literal" << std::endl;
+		return;
+	}
+
+	LetStatement *rawptr = dynamic_cast<LetStatement *>(stmt.get());
+	if (!rawptr)
+	{
+		std::cout << "testcase: " << tc << " failed, expected LetStatement pointer" << std::endl;
+		return;
+	}
+	if (rawptr->ident->identifier_name != expected_identifier_name)
+	{
+		std::cout << "testcase: " << tc << " failed, expected name: " << expected_identifier_name << std::endl;
+		return;
+	}
+	if (rawptr->ident->token_literal() != expected_identifier_name)
+	{
+		std::cout << "testcase: " << tc << " failed, expected token literal: " << expected_identifier_name << std::endl;
+		return;
+	}
+	std::cout << "parse let statements without expression test case: " << tc << " passed" << std::endl;
+}
+
 void test_let_statement_noexpr()
 {
 	std::string input = R"(
@@ -42,40 +69,4 @@ void test_let_statement_noexpr()
 		expected++;
 		tc++;
 	}
-}
-
-static void test_let_statement(const std::unique_ptr<Statement> &stmt, const std::string &expected_identifier_name, const int &tc)
-{
-	if (stmt->token_literal() != "let")
-	{
-		std::cout << "testcase: " << tc << " failed, expected let token literal" << std::endl;
-		return;
-	}
-
-	LetStatement *rawptr = dynamic_cast<LetStatement *>(stmt.get());
-	if (!rawptr)
-	{
-		std::cout << "testcase: " << tc << " failed, expected LetStatement pointer" << std::endl;
-		return;
-	}
-	if (rawptr->ident->identifier_name != expected_identifier_name)
-	{
-		std::cout << "testcase: " << tc << " failed, expected name: " << expected_identifier_name << std::endl;
-		return;
-	}
-	if (rawptr->ident->token_literal() != expected_identifier_name)
-	{
-		std::cout << "testcase: " << tc << " failed, expected token literal: " << expected_identifier_name << std::endl;
-		return;
-	}
-	std::cout << "parse let statements without expression test case: " << tc << " passed" << std::endl;
-}
-
-static void check_parser_errors(Parser &parser)
-{
-	if (parser.get_errors().size() == 0)
-		return;
-	std::cout << "the parser has: " << parser.get_errors().size() << " errors" << std::endl;
-	for (auto &it : parser.get_errors())
-		std::cout << it << std::endl;
 }
