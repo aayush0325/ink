@@ -30,6 +30,8 @@ void test_let_statement_noexpr()
 		return;
 	}
 
+	check_parser_errors(parser);
+
 	std::vector<std::string> expected_identifiers = {"x", "y", "foobar"};
 
 	auto expected = expected_identifiers.begin();
@@ -42,7 +44,7 @@ void test_let_statement_noexpr()
 	}
 }
 
-void test_let_statement(const std::unique_ptr<Statement> &stmt, const std::string &expected_identifier_name, const int &tc)
+static void test_let_statement(const std::unique_ptr<Statement> &stmt, const std::string &expected_identifier_name, const int &tc)
 {
 	if (stmt->token_literal() != "let")
 	{
@@ -67,4 +69,13 @@ void test_let_statement(const std::unique_ptr<Statement> &stmt, const std::strin
 		return;
 	}
 	std::cout << "parse let statements without expression test case: " << tc << " passed" << std::endl;
+}
+
+static void check_parser_errors(Parser &parser)
+{
+	if (parser.get_errors().size() == 0)
+		return;
+	std::cout << "the parser has: " << parser.get_errors().size() << " errors" << std::endl;
+	for (auto &it : parser.get_errors())
+		std::cout << it << std::endl;
 }

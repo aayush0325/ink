@@ -9,9 +9,11 @@
 
 class Parser
 {
+private:
 	std::unique_ptr<Lexer> lexer;
 	Token current_token;
 	Token peek_token;
+	std::vector<std::string> errors;
 
 	bool expect_peek(const TokenType &t);
 
@@ -19,14 +21,19 @@ class Parser
 
 	std::unique_ptr<LetStatement> parse_let_statement();
 
+	void peek_error(const TokenType &t);
+
 public:
 	explicit Parser(std::unique_ptr<Lexer> l) : lexer(std::move(l))
 	{
 		current_token = lexer->next_token();
 		peek_token = lexer->next_token();
+		errors.clear();
 	}
 
 	void next_token();
 
 	std::unique_ptr<Program> parse_program();
+
+	std::vector<std::string> get_errors();
 };
