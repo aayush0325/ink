@@ -1,12 +1,12 @@
+#include "ast/program/program.hpp"
+#include "ast/return_statement/return_statement.hpp"
+#include "lexer/lexer.hpp"
+#include "parser/parser.hpp"
+#include "tests/parser/test.hpp"
+#include <format>
 #include <iostream>
 #include <memory>
 #include <string>
-#include "tests/parser/test.hpp"
-#include "lexer/lexer.hpp"
-#include "parser/parser.hpp"
-#include "ast/program/program.hpp"
-#include "ast/return_statement/return_statement.hpp"
-#include "tests/parser/test.hpp"
 
 void test_return_statement()
 {
@@ -22,13 +22,14 @@ void test_return_statement()
 
 	if (!program)
 	{
-		std::cout << "parse_program() returned nil" << std::endl;
+		std::cout << std::format("error: parse_program() returned nil\n");
 		return;
 	}
 
 	if (program->statements.size() != 3)
 	{
-		std::cout << "incorrect number of statements. expected 3, got: " << program->statements.size() << std::endl;
+		std::cout << std::format("error: expected 3 statements, got {}\n",
+								 program->statements.size());
 		return;
 	}
 
@@ -39,20 +40,21 @@ void test_return_statement()
 	{
 		if (stmt->token_literal() != "return")
 		{
-			std::cout << "testcase: " << tc << " failed, expected return token literal, got: " << stmt->token_literal() << std::endl;
+			std::cout << std::format("testcase {}: failed - expected return token literal, got '{}'\n",
+									 tc, stmt->token_literal());
 			tc++;
 			continue;
 		}
 
-		ReturnStatement *rawptr = dynamic_cast<ReturnStatement *>(stmt.get());
-		if (!rawptr)
+		try
 		{
-			std::cout << "testcase: " << tc << " failed, expected ReturnStatement pointer" << std::endl;
-			tc++;
-			continue;
+			auto &return_stmt = dynamic_cast<ReturnStatement &>(*stmt);
+			std::cout << std::format("testcase {}: passed\n", tc);
 		}
-
-		std::cout << "parse return statements test case: " << tc << " passed" << std::endl;
+		catch (const std::bad_cast &)
+		{
+			std::cout << std::format("testcase {}: failed - expected ReturnStatement type\n", tc);
+		}
 		tc++;
 	}
 }

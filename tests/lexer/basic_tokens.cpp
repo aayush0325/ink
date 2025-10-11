@@ -1,9 +1,10 @@
 #include "lexer/lexer.hpp"
-#include "token/token.hpp"
 #include "tests/lexer/test.hpp"
+#include "token/token.hpp"
 #include "types/types.hpp"
-#include <vector>
+#include <format>
 #include <iostream>
+#include <vector>
 
 void test_basic_TokenType()
 {
@@ -29,12 +30,12 @@ void test_basic_TokenType()
 		if (actual != expected)
 		{
 			success = false;
-			std::cout << "Error in test case: " << tc << " ";
-			std::cout << "Expected Token type: " << expected.type << " Actual Token type: " << actual.type << std::endl;
+			std::cout << std::format("testcase {}: failed - expected token type '{}', got '{}'\n",
+									 tc, static_cast<int>(expected.type), static_cast<int>(actual.type));
 		}
 		tc++;
 	}
 
 	if (success)
-		std::cout << "lexer tests for basic code passed!" << std::endl;
+		std::cout << std::format("lexer tests for basic code: passed\n");
 }

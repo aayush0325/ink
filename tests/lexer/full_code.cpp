@@ -1,9 +1,10 @@
 #include "lexer/lexer.hpp"
-#include "token/token.hpp"
 #include "tests/lexer/test.hpp"
+#include "token/token.hpp"
 #include "types/types.hpp"
-#include <vector>
+#include <format>
 #include <iostream>
+#include <vector>
 
 void test_full_code()
 {
@@ -66,13 +67,14 @@ void test_full_code()
 		Token actual = lexer.next_token();
 		if (actual != expected)
 		{
-			std::cout << "Error in test case: " << tc << " ";
-			std::cout << "Expected Token type: " << expected.type << " (" << expected.literal << ") ";
-			std::cout << "Actual Token type: " << actual.type << " (" << actual.literal << ")" << std::endl;
+			success = false;
+			std::cout << std::format("testcase {}: failed - expected token type '{}' "
+									 "({}), got '{}' ({})\n",
+									 tc, static_cast<int>(expected.type), expected.literal, static_cast<int>(actual.type), actual.literal);
 		}
 		tc++;
 	}
 
 	if (success)
-		std::cout << "lexer tests for full code passed!" << std::endl;
+		std::cout << std::format("lexer tests for full code: passed\n");
 }

@@ -1,36 +1,43 @@
+#include "ast/program/program.hpp"
+#include "lexer/lexer.hpp"
+#include "parser/parser.hpp"
+#include "tests/parser/test.hpp"
+#include <format>
 #include <iostream>
 #include <memory>
 #include <string>
-#include "tests/parser/test.hpp"
-#include "lexer/lexer.hpp"
-#include "parser/parser.hpp"
-#include "ast/program/program.hpp"
 
-static void test_let_statement(const std::unique_ptr<Statement> &stmt, const std::string &expected_identifier_name, const int &tc)
+static void test_let_statement(const std::unique_ptr<Statement> &stmt,
+							   const std::string &expected_identifier_name,
+							   const int &tc)
 {
 	if (stmt->token_literal() != "let")
 	{
-		std::cout << "testcase: " << tc << " failed, expected let token literal" << std::endl;
+		std::cout << std::format("testcase {}: failed - expected let token literal\n", tc);
 		return;
 	}
 
-	LetStatement *rawptr = dynamic_cast<LetStatement *>(stmt.get());
-	if (!rawptr)
+	try
 	{
-		std::cout << "testcase: " << tc << " failed, expected LetStatement pointer" << std::endl;
-		return;
+		auto &let_stmt = dynamic_cast<LetStatement &>(*stmt);
+		if (let_stmt.ident->identifier_name != expected_identifier_name)
+		{
+			std::cout << std::format("testcase {}: failed - expected identifier name '{}'\n",
+									 tc, expected_identifier_name);
+			return;
+		}
+		if (let_stmt.ident->token_literal() != expected_identifier_name)
+		{
+			std::cout << std::format("testcase {}: failed - expected token literal '{}'\n",
+									 tc, expected_identifier_name);
+			return;
+		}
+		std::cout << std::format("testcase {}: passed\n", tc);
 	}
-	if (rawptr->ident->identifier_name != expected_identifier_name)
+	catch (const std::bad_cast &)
 	{
-		std::cout << "testcase: " << tc << " failed, expected name: " << expected_identifier_name << std::endl;
-		return;
+		std::cout << std::format("testcase {}: failed - expected LetStatement type\n", tc);
 	}
-	if (rawptr->ident->token_literal() != expected_identifier_name)
-	{
-		std::cout << "testcase: " << tc << " failed, expected token literal: " << expected_identifier_name << std::endl;
-		return;
-	}
-	std::cout << "parse let statements without expression test case: " << tc << " passed" << std::endl;
 }
 
 void test_let_statement_noexpr()
@@ -47,13 +54,14 @@ void test_let_statement_noexpr()
 
 	if (!program)
 	{
-		std::cout << "parse_program() returned nil" << std::endl;
+		std::cout << std::format("error: parse_program() returned nil\n");
 		return;
 	}
 
 	if (program->statements.size() != 3)
 	{
-		std::cout << "incorrect number of statements pushed into the statements vector by the parser: " << program->statements.size() << std::endl;
+		std::cout << std::format("error: expected 3 statements, got {}\n",
+								 program->statements.size());
 		return;
 	}
 

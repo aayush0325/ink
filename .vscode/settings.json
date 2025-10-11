@@ -49,6 +49,10 @@
 		"istream": "cpp",
 		"typeindex": "cpp",
 		"map": "cpp",
-		"format": "cpp"
+		"format": "cpp",
+		"charconv": "cpp",
+		"ctime": "cpp",
+		"span": "cpp",
+		"variant": "cpp"
 	},
 }
