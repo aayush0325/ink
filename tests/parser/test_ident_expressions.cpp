@@ -29,8 +29,8 @@ void check_identifier_expression_statements()
 	{
 		try
 		{
-			ExpressionStatement &exp_stmt = dynamic_cast<ExpressionStatement &>(*stmt);
-			Identifier &ident = dynamic_cast<Identifier &>(*exp_stmt.expression);
+			ast::ExpressionStatement &exp_stmt = dynamic_cast<ast::ExpressionStatement &>(*stmt);
+			ast::Identifier &ident = dynamic_cast<ast::Identifier &>(*exp_stmt.expression);
 
 			if (ident.identifier_name != "x")
 			{

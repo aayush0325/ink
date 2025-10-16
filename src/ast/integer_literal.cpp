@@ -1,16 +1,16 @@
 #include "ast/integer_literal.hpp"
 
-std::string IntegerLiteral::token_literal()
+std::string ast::IntegerLiteral::token_literal()
 {
 	return token.literal;
 }
 
-std::string IntegerLiteral::get_string()
+std::string ast::IntegerLiteral::get_string()
 {
 	return token.literal;
 }
 
-bool IntegerLiteral::set_integer_value_from_token()
+bool ast::IntegerLiteral::set_integer_value_from_token()
 {
 	try
 	{

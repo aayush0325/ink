@@ -12,13 +12,13 @@ void test_program_string()
 {
 	std::cout << "Testing Program string representation...\n";
 
-	auto program = std::make_unique<Program>();
+	auto program = std::make_unique<ast::Program>();
 
 	Token let_token(TokenType::LET, "let");
 	Token ident_token(TokenType::IDENT, "myVar");
 
-	auto let_stmt = std::make_unique<LetStatement>(let_token);
-	let_stmt->ident = std::make_unique<Identifier>(ident_token, "myVar");
+	auto let_stmt = std::make_unique<ast::LetStatement>(let_token);
+	let_stmt->ident = std::make_unique<ast::Identifier>(ident_token, "myVar");
 
 	program->statements.push_back(std::move(let_stmt));
 
@@ -39,17 +39,17 @@ void test_program_multiple_statements()
 {
 	std::cout << "Testing Program with multiple statements...\n";
 
-	auto program = std::make_unique<Program>();
+	auto program = std::make_unique<ast::Program>();
 
 	Token let_token1(TokenType::LET, "let");
 	Token ident_token1(TokenType::IDENT, "x");
 
-	auto let_stmt1 = std::make_unique<LetStatement>(let_token1);
-	let_stmt1->ident = std::make_unique<Identifier>(ident_token1, "x");
+	auto let_stmt1 = std::make_unique<ast::LetStatement>(let_token1);
+	let_stmt1->ident = std::make_unique<ast::Identifier>(ident_token1, "x");
 
 	Token return_token(TokenType::RETURN, "return");
 
-	auto return_stmt = std::make_unique<ReturnStatement>(return_token);
+	auto return_stmt = std::make_unique<ast::ReturnStatement>(return_token);
 
 	program->statements.push_back(std::move(let_stmt1));
 	program->statements.push_back(std::move(return_stmt));
@@ -71,7 +71,7 @@ void test_empty_program()
 {
 	std::cout << "Testing empty Program...\n";
 
-	auto program = std::make_unique<Program>();
+	auto program = std::make_unique<ast::Program>();
 
 	std::string expected = "";
 	std::string actual = program->get_string();

@@ -26,8 +26,8 @@ void check_integer_literal_statement()
 
 	try
 	{
-		ExpressionStatement &stmt = dynamic_cast<ExpressionStatement &>(*program->statements[0]);
-		IntegerLiteral &integer_literal = dynamic_cast<IntegerLiteral &>(*stmt.expression);
+		ast::ExpressionStatement &stmt = dynamic_cast<ast::ExpressionStatement &>(*program->statements[0]);
+		ast::IntegerLiteral &integer_literal = dynamic_cast<ast::IntegerLiteral &>(*stmt.expression);
 
 		if (integer_literal.get_value() != 5)
 		{

@@ -6,12 +6,12 @@ void Parser::next_token()
 	peek_token = lexer->next_token();
 }
 
-std::unique_ptr<Program> Parser::parse_program()
+std::unique_ptr<ast::Program> Parser::parse_program()
 {
-	std::unique_ptr<Program> program = std::make_unique<Program>();
+	std::unique_ptr<ast::Program> program = std::make_unique<ast::Program>();
 	while (current_token.type != TokenType::E_O_F)
 	{
-		std::unique_ptr<Statement> statement = parse_statement();
+		std::unique_ptr<ast::Statement> statement = parse_statement();
 		if (statement != nullptr)
 		{
 			program->statements.push_back(std::move(statement));
@@ -21,7 +21,7 @@ std::unique_ptr<Program> Parser::parse_program()
 	return program;
 }
 
-std::unique_ptr<Statement> Parser::parse_statement()
+std::unique_ptr<ast::Statement> Parser::parse_statement()
 {
 	switch (current_token.type)
 	{
@@ -35,7 +35,7 @@ std::unique_ptr<Statement> Parser::parse_statement()
 	}
 }
 
-std::unique_ptr<Expression> Parser::parse_expression(Precedence x)
+std::unique_ptr<ast::Expression> Parser::parse_expression(Precedence x)
 {
 	auto it = prefix_lookup_table.find(current_token.type);
 	if (it == prefix_lookup_table.end())
@@ -43,6 +43,6 @@ std::unique_ptr<Expression> Parser::parse_expression(Precedence x)
 		return nullptr;
 	}
 	auto prefix = it->second;
-	std::unique_ptr<Expression> leftexpr = prefix();
+	std::unique_ptr<ast::Expression> leftexpr = prefix();
 	return leftexpr;
 }

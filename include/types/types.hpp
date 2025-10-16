@@ -12,5 +12,5 @@ typedef int16_t i16;
 typedef int32_t i32;
 typedef int64_t i64;
 
-using prefix_parse_function = std::function<std::unique_ptr<Expression>()>;
-using infix_parse_function = std::function<std::unique_ptr<Expression>(std::unique_ptr<Expression>)>;
+using prefix_parse_function = std::function<std::unique_ptr<ast::Expression>()>;
+using infix_parse_function = std::function<std::unique_ptr<ast::Expression>(std::unique_ptr<ast::Expression>)>;

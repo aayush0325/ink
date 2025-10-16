@@ -9,7 +9,7 @@ void test_identifier_string()
 	std::cout << "Testing Identifier string representation...\n";
 
 	Token ident_token(TokenType::IDENT, "myVar");
-	Identifier identifier(ident_token, "myVar");
+	ast::Identifier identifier(ident_token, "myVar");
 
 	std::string expected = "myVar";
 	std::string actual = identifier.get_string();

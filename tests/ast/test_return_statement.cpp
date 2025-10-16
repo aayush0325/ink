@@ -11,7 +11,7 @@ void test_return_statement_string()
 
 	Token return_token(TokenType::RETURN, "return");
 
-	auto return_stmt = std::make_unique<ReturnStatement>(return_token);
+	auto return_stmt = std::make_unique<ast::ReturnStatement>(return_token);
 
 	std::string expected = "return ;";
 	std::string actual = return_stmt->get_string();

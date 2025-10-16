@@ -3,7 +3,9 @@
 #include "token/token.hpp"
 #include "ast/ast.hpp"
 
-class Identifier : public Expression
+namespace ast
+{
+	class Identifier : public Expression
 {
 public:
 	virtual std::string token_literal();
@@ -14,3 +16,4 @@ public:
 	Token token; // the "IDENT" token
 	std::string identifier_name;
 };
+}

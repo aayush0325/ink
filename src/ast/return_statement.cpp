@@ -1,11 +1,11 @@
 #include "ast/return_statement.hpp"
 
-std::string ReturnStatement::token_literal()
+std::string ast::ReturnStatement::token_literal()
 {
 	return token.literal; // the return token
 }
 
-std::string ReturnStatement::get_string()
+std::string ast::ReturnStatement::get_string()
 {
 	std::string result = "";
 	result += token_literal();

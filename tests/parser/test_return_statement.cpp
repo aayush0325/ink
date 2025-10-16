@@ -48,7 +48,7 @@ void test_return_statement()
 
 		try
 		{
-			auto &return_stmt = dynamic_cast<ReturnStatement &>(*stmt);
+			auto &return_stmt = dynamic_cast<ast::ReturnStatement &>(*stmt);
 			std::cout << std::format("testcase {}: passed\n", tc);
 		}
 		catch (const std::bad_cast &)

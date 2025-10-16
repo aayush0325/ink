@@ -4,7 +4,9 @@
 #include "ast/ast.hpp"
 #include <memory>
 
-class ExpressionStatement : public Statement
+namespace ast
+{
+	class ExpressionStatement : public Statement
 {
 public:
 	virtual std::string token_literal();
@@ -16,3 +18,4 @@ public:
 private:
 	Token token;
 };
+}

@@ -4,7 +4,9 @@
 #include "token/token.hpp"
 #include <memory>
 
-class ReturnStatement : public Statement
+namespace ast
+{
+	class ReturnStatement : public Statement
 {
 public:
 	ReturnStatement(Token token) : token(token), return_value(nullptr) {}
@@ -15,3 +17,4 @@ private:
 	Token token;							  // the return token
 	std::unique_ptr<Expression> return_value; // the expression which has to be calculated and returned
 };
+}

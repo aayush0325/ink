@@ -37,27 +37,27 @@ private:
 
 	bool expect_peek(const TokenType &t);
 
-	std::unique_ptr<Statement> parse_statement();
+	std::unique_ptr<ast::Statement> parse_statement();
 
-	std::unique_ptr<LetStatement> parse_let_statement();
+	std::unique_ptr<ast::LetStatement> parse_let_statement();
 
-	std::unique_ptr<ReturnStatement> parse_return_statement();
+	std::unique_ptr<ast::ReturnStatement> parse_return_statement();
 
-	std::unique_ptr<ExpressionStatement> parse_expression_statement();
+	std::unique_ptr<ast::ExpressionStatement> parse_expression_statement();
 
-	std::unique_ptr<Expression> parse_expression(Precedence x);
+	std::unique_ptr<ast::Expression> parse_expression(Precedence x);
 
 	void peek_error(const TokenType &t);
 
-	std::unique_ptr<Expression> prefix_parse_identifier();
-	std::unique_ptr<Expression> prefix_parse_integer_literal();
+	std::unique_ptr<ast::Expression> prefix_parse_identifier();
+	std::unique_ptr<ast::Expression> prefix_parse_integer_literal();
 
 public:
 	explicit Parser(std::unique_ptr<Lexer> l);
 
 	void next_token();
 
-	std::unique_ptr<Program> parse_program();
+	std::unique_ptr<ast::Program> parse_program();
 
 	std::vector<std::string> get_errors();
 };

@@ -1,11 +1,11 @@
 #include "ast/expression_statement.hpp"
 
-std::string ExpressionStatement::token_literal()
+std::string ast::ExpressionStatement::token_literal()
 {
 	return token.literal;
 }
 
-std::string ExpressionStatement::get_string()
+std::string ast::ExpressionStatement::get_string()
 {
 	std::string result = "";
 	while (expression != nullptr)

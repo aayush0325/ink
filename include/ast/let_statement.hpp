@@ -5,7 +5,9 @@
 #include "token/token.hpp"
 #include <memory>
 
-class LetStatement : public Statement
+namespace ast
+{
+	class LetStatement : public Statement
 {
 public:
 	virtual std::string token_literal();
@@ -18,3 +20,4 @@ private:
 	Token token; // the "LET" token
 	std::unique_ptr<Expression> value;
 };
+}

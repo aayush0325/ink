@@ -1,11 +1,11 @@
 #include "ast/identifier.hpp"
 
-std::string Identifier::token_literal()
+std::string ast::Identifier::token_literal()
 {
 	return token.literal;
 }
 
-std::string Identifier::get_string()
+std::string ast::Identifier::get_string()
 {
 	return identifier_name;
 }

@@ -3,7 +3,9 @@
 #include "types/types.hpp"
 #include "token/token.hpp"
 
-class IntegerLiteral : public Expression
+namespace ast
+{
+	class IntegerLiteral : public Expression
 {
 	i64 integer_value;
 	Token token;
@@ -18,3 +20,4 @@ public:
 
 	bool set_integer_value_from_token();
 };
+}

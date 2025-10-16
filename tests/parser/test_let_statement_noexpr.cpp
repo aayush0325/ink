@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-static void test_let_statement(const std::unique_ptr<Statement> &stmt,
+static void test_let_statement(const std::unique_ptr<ast::Statement> &stmt,
 							   const std::string &expected_identifier_name,
 							   const int &tc)
 {
@@ -19,7 +19,7 @@ static void test_let_statement(const std::unique_ptr<Statement> &stmt,
 
 	try
 	{
-		auto &let_stmt = dynamic_cast<LetStatement &>(*stmt);
+		auto &let_stmt = dynamic_cast<ast::LetStatement &>(*stmt);
 		if (let_stmt.ident->identifier_name != expected_identifier_name)
 		{
 			std::cout << std::format("testcase {}: failed - expected identifier name '{}'\n",

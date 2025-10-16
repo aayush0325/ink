@@ -13,8 +13,8 @@ void test_let_statement_string()
 	Token let_token(TokenType::LET, "let");
 	Token ident_token(TokenType::IDENT, "myVar");
 
-	auto let_stmt = std::make_unique<LetStatement>(let_token);
-	let_stmt->ident = std::make_unique<Identifier>(ident_token, "myVar");
+	auto let_stmt = std::make_unique<ast::LetStatement>(let_token);
+	let_stmt->ident = std::make_unique<ast::Identifier>(ident_token, "myVar");
 
 	std::string expected = "let myVar;";
 	std::string actual = let_stmt->get_string();
