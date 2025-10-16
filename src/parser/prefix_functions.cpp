@@ -2,7 +2,7 @@
 
 std::unique_ptr<ast::Expression> Parser::prefix_parse_identifier()
 {
-	std::unique_ptr<ast::Identifier> ident = std::make_unique<ast::Identifier>(current_token, current_token.literal);
+	auto ident = std::make_unique<ast::Identifier>(current_token, current_token.literal);
 	return ident;
 }
 
@@ -15,4 +15,12 @@ std::unique_ptr<ast::Expression> Parser::prefix_parse_integer_literal()
 		return nullptr;
 	}
 	return integer_literal;
+}
+
+std::unique_ptr<ast::Expression> Parser::prefix_parse_prefix_expression()
+{
+	auto expr = std::make_unique<ast::PrefixExpression>(current_token, current_token.literal);
+	next_token();
+	expr->set_right_expression(parse_expression(Precedence::PREFIX));
+	return expr;
 }

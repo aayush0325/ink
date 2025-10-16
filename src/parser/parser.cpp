@@ -40,6 +40,7 @@ std::unique_ptr<ast::Expression> Parser::parse_expression(Precedence x)
 	auto it = prefix_lookup_table.find(current_token.type);
 	if (it == prefix_lookup_table.end())
 	{
+		errors.push_back("no prefix function found in the lookup table");
 		return nullptr;
 	}
 	auto prefix = it->second;

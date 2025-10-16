@@ -12,4 +12,5 @@ int main()
 	run_all_ast_string_tests();
 	check_identifier_expression_statements();
 	check_integer_literal_statement();
+	check_prefix_expressions();
 }

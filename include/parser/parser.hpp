@@ -12,6 +12,7 @@
 #include <functional>
 #include <ast/expression_statement.hpp>
 #include "ast/integer_literal.hpp"
+#include "ast/prefix_expression.hpp"
 
 enum Precedence
 {
@@ -51,6 +52,7 @@ private:
 
 	std::unique_ptr<ast::Expression> prefix_parse_identifier();
 	std::unique_ptr<ast::Expression> prefix_parse_integer_literal();
+	std::unique_ptr<ast::Expression> prefix_parse_prefix_expression();
 
 public:
 	explicit Parser(std::unique_ptr<Lexer> l);

@@ -10,3 +10,4 @@ void test_return_statement();
 void check_parser_errors(Parser &parser);
 void check_identifier_expression_statements();
 void check_integer_literal_statement();
+void check_prefix_expressions();
