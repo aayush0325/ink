@@ -20,7 +20,9 @@ void check_integer_literal_statement()
 
 	if (program->statements.size() != 1)
 	{
-		std::cout << std::format("program has not enough statements. got={}", program->statements.size()) << std::endl;
+		std::cout << std::format("program has not enough statements. got={}",
+								 program->statements.size())
+				  << std::endl;
 		return;
 	}
 
@@ -34,13 +36,13 @@ void check_integer_literal_statement()
 			std::cout << std::format("literal.Value not {}. got={}", 5, integer_literal.get_value()) << std::endl;
 			return;
 		}
-		
+
 		if (integer_literal.token_literal() != "5")
 		{
 			std::cout << std::format("literal.TokenLiteral not {}. got={}", "5", integer_literal.token_literal()) << std::endl;
 			return;
 		}
-		
+
 		std::cout << "test for integer literal expressions has passed!" << std::endl;
 	}
 	catch (std::bad_cast)

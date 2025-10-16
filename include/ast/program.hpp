@@ -9,17 +9,17 @@
 namespace ast
 {
 	class Program : public Node
-{
-public:
-	virtual std::string token_literal();
-	virtual std::string get_string();
-
-	Program()
 	{
-		statements.clear();
-	}
+	public:
+		virtual std::string token_literal();
+		virtual std::string get_string();
 
-	// each line will be a statement stored in this vector
-	std::vector<std::unique_ptr<Statement>> statements;
-};
+		Program()
+		{
+			statements.clear();
+		}
+
+		// each line will be a statement stored in this vector
+		std::vector<std::unique_ptr<Statement>> statements;
+	};
 }

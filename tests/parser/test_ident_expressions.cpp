@@ -21,7 +21,9 @@ void check_identifier_expression_statements()
 	check_parser_errors(parser);
 	if (program->statements.size() != 1)
 	{
-		std::cout << std::format("got {} statements, expected 1", program->statements.size()) << std::endl;
+		std::cout << std::format("got {} statements, expected 1",
+								 program->statements.size())
+				  << std::endl;
 		return;
 	}
 
@@ -34,13 +36,17 @@ void check_identifier_expression_statements()
 
 			if (ident.identifier_name != "x")
 			{
-				std::cout << std::format("Expected identifier name: x, got: {}", ident.identifier_name) << std::endl;
+				std::cout << std::format("Expected identifier name: x, got: {}",
+										 ident.identifier_name)
+						  << std::endl;
 				return;
 			}
 
 			if (ident.token_literal() != "x")
 			{
-				std::cout << std::format("Expected identifier name: x, got: {}", ident.identifier_name) << std::endl;
+				std::cout << std::format("Expected identifier name: x, got: {}",
+										 ident.identifier_name)
+						  << std::endl;
 				return;
 			}
 
