@@ -1,5 +1,5 @@
-#include "ast/program/program.hpp"
-#include "ast/return_statement/return_statement.hpp"
+#include "ast/program.hpp"
+#include "ast/return_statement.hpp"
 #include "lexer/lexer.hpp"
 #include "parser/parser.hpp"
 #include "tests/parser/test.hpp"
