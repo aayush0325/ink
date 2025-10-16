@@ -3,9 +3,9 @@
 #include <memory>
 #include "lexer/lexer.hpp"
 #include "token/token.hpp"
-#include "ast/program/program.hpp"
-#include "ast/let_statement/let_statement.hpp"
-#include "ast/return_statement/return_statement.hpp"
+#include "ast/program.hpp"
+#include "ast/let_statement.hpp"
+#include "ast/return_statement.hpp"
 #include "ast/ast.hpp"
 
 class Parser

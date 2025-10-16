@@ -1,4 +1,4 @@
-#include "ast/identifier/identifier.hpp"
+#include "ast/identifier.hpp"
 
 std::string Identifier::token_literal()
 {

@@ -1,4 +1,4 @@
-#include "ast/let_statement/let_statement.hpp"
+#include "ast/let_statement.hpp"
 
 std::string LetStatement::token_literal()
 {

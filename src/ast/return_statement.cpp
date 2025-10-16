@@ -1,4 +1,4 @@
-#include "ast/return_statement/return_statement.hpp"
+#include "ast/return_statement.hpp"
 
 std::string ReturnStatement::token_literal()
 {

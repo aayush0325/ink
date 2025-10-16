@@ -1,4 +1,4 @@
-#include "ast/program/program.hpp"
+#include "ast/program.hpp"
 
 std::string Program::token_literal()
 {
