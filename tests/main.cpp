@@ -1,5 +1,6 @@
 #include "tests/lexer/test.hpp"
 #include "tests/parser/test.hpp"
+#include "tests/ast/test.hpp"
 
 int main()
 {
@@ -8,4 +9,5 @@ int main()
 	test_code_complex();
 	test_let_statement_noexpr();
 	test_return_statement();
+	run_all_ast_string_tests();
 }
