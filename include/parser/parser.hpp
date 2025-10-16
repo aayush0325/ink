@@ -11,6 +11,7 @@
 #include "types/types.hpp"
 #include <functional>
 #include <ast/expression_statement.hpp>
+#include "ast/integer_literal.hpp"
 
 enum Precedence
 {
@@ -49,6 +50,7 @@ private:
 	void peek_error(const TokenType &t);
 
 	std::unique_ptr<Expression> prefix_parse_identifier();
+	std::unique_ptr<Expression> prefix_parse_integer_literal();
 
 public:
 	explicit Parser(std::unique_ptr<Lexer> l);

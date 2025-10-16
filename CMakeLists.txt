@@ -19,8 +19,8 @@ add_library(interpretr_lib STATIC ${LIB_FILES})
 
 # STEP 3: Create the main executable
 # Links only src/main.cpp + the library
-add_executable(main src/main.cpp)
-target_link_libraries(main interpretr_lib)
+add_executable(ink src/main.cpp)
+target_link_libraries(ink interpretr_lib)
 
 # STEP 4: Collect test files (excluding main.cpp from src/)
 file(GLOB_RECURSE TEST_FILES tests/*.cpp)

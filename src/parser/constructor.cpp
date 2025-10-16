@@ -10,4 +10,9 @@ Parser::Parser(std::unique_ptr<Lexer> l) : lexer(std::move(l))
 								{
 									return prefix_parse_identifier();
 								}});
+
+	prefix_lookup_table.insert({TokenType::INT, [this]()
+								{
+									return prefix_parse_integer_literal();
+								}});
 }
