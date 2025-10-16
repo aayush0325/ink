@@ -16,9 +16,9 @@ void test_return_statement()
 		return 993322;
 	)";
 
-	std::unique_ptr<Lexer> lexer = std::make_unique<Lexer>(input);
-	Parser parser = Parser(std::move(lexer));
-	std::unique_ptr<Program> program = parser.parse_program();
+	auto lexer = std::make_unique<Lexer>(input);
+	auto parser = Parser(std::move(lexer));
+	auto program = parser.parse_program();
 
 	if (!program)
 	{

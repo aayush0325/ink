@@ -48,9 +48,9 @@ void test_let_statement_noexpr()
 		let foobar = 1123;
 	)";
 
-	std::unique_ptr<Lexer> lexer = std::make_unique<Lexer>(input);
+	auto lexer = std::make_unique<Lexer>(input);
 	Parser parser = Parser(std::move(lexer));
-	std::unique_ptr<Program> program = parser.parse_program();
+	auto program = parser.parse_program();
 
 	if (!program)
 	{
@@ -67,7 +67,7 @@ void test_let_statement_noexpr()
 
 	check_parser_errors(parser);
 
-	std::vector<std::string> expected_identifiers = {"x", "y", "foobar"};
+	auto expected_identifiers = {"x", "y", "foobar"};
 
 	auto expected = expected_identifiers.begin();
 	int tc = 1;

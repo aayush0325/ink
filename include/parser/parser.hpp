@@ -7,6 +7,21 @@
 #include "ast/let_statement.hpp"
 #include "ast/return_statement.hpp"
 #include "ast/ast.hpp"
+#include <map>
+#include "types/types.hpp"
+#include <functional>
+#include <ast/expression_statement.hpp>
+
+enum Precedence
+{
+	LOWEST,
+	EQUALS,
+	LESSGREATER,
+	SUM,
+	PRODUCT,
+	PREFIX,
+	CALL
+};
 
 class Parser
 {
@@ -16,6 +31,9 @@ private:
 	Token peek_token;
 	std::vector<std::string> errors;
 
+	std::map<TokenType, infix_parse_function> infix_lookup_table;
+	std::map<TokenType, prefix_parse_function> prefix_lookup_table;
+
 	bool expect_peek(const TokenType &t);
 
 	std::unique_ptr<Statement> parse_statement();
@@ -24,15 +42,16 @@ private:
 
 	std::unique_ptr<ReturnStatement> parse_return_statement();
 
+	std::unique_ptr<ExpressionStatement> parse_expression_statement();
+
+	std::unique_ptr<Expression> parse_expression(Precedence x);
+
 	void peek_error(const TokenType &t);
 
+	std::unique_ptr<Expression> prefix_parse_identifier();
+
 public:
-	explicit Parser(std::unique_ptr<Lexer> l) : lexer(std::move(l))
-	{
-		current_token = lexer->next_token();
-		peek_token = lexer->next_token();
-		errors.clear();
-	}
+	explicit Parser(std::unique_ptr<Lexer> l);
 
 	void next_token();
 

@@ -10,4 +10,5 @@ int main()
 	test_let_statement_noexpr();
 	test_return_statement();
 	run_all_ast_string_tests();
+	check_identifier_expression_statements();
 }
