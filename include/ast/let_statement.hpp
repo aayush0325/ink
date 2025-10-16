@@ -9,6 +9,7 @@ class LetStatement : public Statement
 {
 public:
 	virtual std::string token_literal();
+	virtual std::string get_string();
 	explicit LetStatement(Token token) : token(token), ident(nullptr), value(nullptr) {}
 
 	std::unique_ptr<Identifier> ident;

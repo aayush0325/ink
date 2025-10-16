@@ -7,3 +7,11 @@ std::string Program::token_literal()
 	else
 		return statements.front()->token_literal();
 }
+
+std::string Program::get_string()
+{
+	std::string result = "";
+	for (const auto &it : statements)
+		result += it->get_string();
+	return result;
+}

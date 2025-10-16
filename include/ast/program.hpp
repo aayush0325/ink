@@ -10,6 +10,7 @@ class Program : public Node
 {
 public:
 	virtual std::string token_literal();
+	virtual std::string get_string();
 
 	Program()
 	{
