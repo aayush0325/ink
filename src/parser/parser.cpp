@@ -1,5 +1,16 @@
 #include "parser/parser.hpp"
 
+const std::map<TokenType, Precedence> Parser::precedences = {
+	{TokenType::EQ, EQUALS},
+	{TokenType::NEQ, EQUALS},
+	{TokenType::LT, LESSGREATER},
+	{TokenType::GT, LESSGREATER},
+	{TokenType::PLUS, SUM},
+	{TokenType::MINUS, SUM},
+	{TokenType::SLASH, PRODUCT},
+	{TokenType::ASTERISK, PRODUCT},
+};
+
 void Parser::next_token()
 {
 	current_token = peek_token;
@@ -35,7 +46,7 @@ std::unique_ptr<ast::Statement> Parser::parse_statement()
 	}
 }
 
-std::unique_ptr<ast::Expression> Parser::parse_expression(Precedence x)
+std::unique_ptr<ast::Expression> Parser::parse_expression(Precedence precedence)
 {
 	auto it = prefix_lookup_table.find(current_token.type);
 	if (it == prefix_lookup_table.end())
@@ -44,6 +55,18 @@ std::unique_ptr<ast::Expression> Parser::parse_expression(Precedence x)
 		return nullptr;
 	}
 	auto prefix = it->second;
-	std::unique_ptr<ast::Expression> leftexpr = prefix();
-	return leftexpr;
+	std::unique_ptr<ast::Expression> left_exp = prefix();
+
+	while (peek_token.type != TokenType::SEMICOLON && precedence < peek_precedence())
+	{
+		auto infix_it = infix_lookup_table.find(peek_token.type);
+		if (infix_it == infix_lookup_table.end())
+		{
+			return left_exp;
+		}
+		auto infix = infix_it->second;
+		next_token();
+		left_exp = infix(std::move(left_exp));
+	}
+	return left_exp;
 }

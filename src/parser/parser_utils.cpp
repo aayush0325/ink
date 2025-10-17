@@ -21,8 +21,27 @@ void Parser::peek_error(const TokenType &t)
 {
 	std::string error = std::format(
 		"expected token type: {}, got {}",
-		static_cast<int>(t),				 // or your own to_string(t)
-		static_cast<int>(current_token.type) // assuming this is a std::string
-	);
+		static_cast<int>(t),
+		static_cast<int>(current_token.type));
 	errors.push_back(error);
+}
+
+Precedence Parser::peek_precedence()
+{
+	auto it = precedences.find(peek_token.type);
+	if (it != precedences.end())
+	{
+		return it->second;
+	}
+	return Precedence::LOWEST;
+}
+
+Precedence Parser::current_precedence()
+{
+	auto it = precedences.find(current_token.type);
+	if (it != precedences.end())
+	{
+		return it->second;
+	}
+	return Precedence::LOWEST;
 }

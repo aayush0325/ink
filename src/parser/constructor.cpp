@@ -25,4 +25,44 @@ Parser::Parser(std::unique_ptr<Lexer> l) : lexer(std::move(l))
 								{
 									return prefix_parse_prefix_expression();
 								}});
+
+	infix_lookup_table.insert({TokenType::PLUS, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::MINUS, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::SLASH, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::ASTERISK, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::EQ, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::NEQ, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::LT, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::GT, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
 }

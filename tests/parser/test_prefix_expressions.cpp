@@ -14,7 +14,7 @@ void check_prefix_expressions()
 	{
 		std::string input;
 		std::string expected_operator;
-		int64_t expected_integer_value;
+		i64 expected_integer_value;
 	};
 
 	std::vector<PrefixTest> prefix_tests = {

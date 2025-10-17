@@ -13,4 +13,6 @@ int main()
 	check_identifier_expression_statements();
 	check_integer_literal_statement();
 	check_prefix_expressions();
+	check_operator_precedence_parsing();
+	check_infix_expressions();
 }

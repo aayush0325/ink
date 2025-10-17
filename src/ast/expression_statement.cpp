@@ -8,7 +8,7 @@ std::string ast::ExpressionStatement::token_literal()
 std::string ast::ExpressionStatement::get_string()
 {
 	std::string result = "";
-	while (expression != nullptr)
+	if (expression != nullptr)
 		result += expression->get_string();
 	return result;
 }
