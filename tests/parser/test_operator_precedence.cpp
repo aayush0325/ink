@@ -71,7 +71,7 @@ void check_operator_precedence_parsing()
 	}
 
 	if (error_count == 0)
-		std::cout << "Test for operator precedence parsing ended (all passed)\n";
+		std::cout << "Test for operator precedence parsing ended (all passed)\n\n";
 	else
-		std::cout << std::format("Test for operator precedence parsing ended ({} errors)\n", error_count);
+		std::cout << std::format("Test for operator precedence parsing ended ({} errors)\n\n", error_count);
 }
