@@ -8,7 +8,8 @@
 
 void check_prefix_expressions()
 {
-	std::cout << "starting test for prefix expressions" << std::endl;
+	std::cout << "Test for prefix expressions parsing\n";
+	std::cout << "Test starting\n";
 
 	struct PrefixTest
 	{
@@ -21,6 +22,8 @@ void check_prefix_expressions()
 		{"!5;", "!", 5},
 		{"-15;", "-", 15}};
 
+	int error_count = 0;
+
 	for (const auto &test : prefix_tests)
 	{
 		auto lexer = std::make_unique<Lexer>(test.input);
@@ -29,20 +32,22 @@ void check_prefix_expressions()
 
 		if (!program)
 		{
-			std::cout << std::format("Program returned nullptr for input: {}",
+			error_count++;
+			std::cout << std::format("Failed - Program returned nullptr for input: {}",
 									 test.input)
 					  << std::endl;
-			return;
+			continue;
 		}
 
 		check_parser_errors(parser);
 
 		if (program->statements.size() != 1)
 		{
-			std::cout << std::format("program.Statements does not contain {} statements. got={}",
+			error_count++;
+			std::cout << std::format("Failed - program.Statements does not contain {} statements. got={}",
 									 1, program->statements.size())
 					  << std::endl;
-			return;
+			continue;
 		}
 
 		try
@@ -52,17 +57,19 @@ void check_prefix_expressions()
 
 			if (exp.get_prefix_operator() != test.expected_operator)
 			{
-				std::cout << std::format("exp.Operator is not '{}'. got={}",
+				error_count++;
+				std::cout << std::format("Failed - exp.Operator is not '{}'. got={}",
 										 test.expected_operator, exp.get_prefix_operator())
 						  << std::endl;
-				return;
+				continue;
 			}
 
 			// Test the right expression (should be an integer literal)
 			if (!exp.get_right_expression())
 			{
-				std::cout << std::format("exp.Right is null") << std::endl;
-				return;
+				error_count++;
+				std::cout << std::format("Failed - exp.Right is null") << std::endl;
+				continue;
 			}
 
 			try
@@ -70,28 +77,34 @@ void check_prefix_expressions()
 				auto right_int = dynamic_cast<ast::IntegerLiteral &>(*exp.get_right_expression());
 				if (right_int.get_value() != test.expected_integer_value)
 				{
-					std::cout << std::format("right.Value is not {}. got={}",
+					error_count++;
+					std::cout << std::format("Failed - right.Value is not {}. got={}",
 											 test.expected_integer_value, right_int.get_value())
 							  << std::endl;
-					return;
+					continue;
 				}
 			}
 			catch (const std::bad_cast &)
 			{
-				std::cout << std::format("exp.Right is not ast.IntegerLiteral. got={}",
+				error_count++;
+				std::cout << std::format("Failed - exp.Right is not ast.IntegerLiteral. got={}",
 										 typeid(*exp.get_right_expression()).name())
 						  << std::endl;
-				return;
+				continue;
 			}
 		}
 		catch (const std::bad_cast &)
 		{
-			std::cout << std::format("stmt is not ast.PrefixExpression. got={}",
+			error_count++;
+			std::cout << std::format("Failed - stmt is not ast.PrefixExpression. got={}",
 									 typeid(*program->statements[0]).name())
 					  << std::endl;
-			return;
+			continue;
 		}
 	}
 
-	std::cout << "test for prefix expressions has passed!" << std::endl;
+	if (error_count == 0)
+		std::cout << "Test for prefix expressions parsing ended (all passed)\n\n";
+	else
+		std::cout << std::format("Test for prefix expressions parsing ended ({} errors)\n\n", error_count);
 }

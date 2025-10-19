@@ -10,6 +10,9 @@
 
 void test_return_statement()
 {
+	std::cout << "Test for return statement parsing\n";
+	std::cout << "Test starting\n";
+
 	std::string input = R"(
 		return 5;
 		return 10;
@@ -19,42 +22,56 @@ void test_return_statement()
 	auto lexer = std::make_unique<Lexer>(input);
 	auto parser = Parser(std::move(lexer));
 	auto program = parser.parse_program();
+	int error_count = 0;
 
 	if (!program)
 	{
-		std::cout << std::format("error: parse_program() returned nil\n");
-		return;
+		error_count++;
+		std::cout << "Failed - parse_program() returned nil\n";
 	}
 
-	if (program->statements.size() != 3)
+	if (program && error_count == 0)
 	{
-		std::cout << std::format("error: expected 3 statements, got {}\n",
-								 program->statements.size());
-		return;
+		if (program->statements.size() != 3)
+		{
+			error_count++;
+			std::cout << std::format("Failed - expected 3 statements, got {}\n",
+									 program->statements.size());
+		}
+
+		check_parser_errors(parser);
+
+		if (error_count == 0)
+		{
+			int tc = 1;
+			for (const auto &stmt : program->statements)
+			{
+				if (stmt->token_literal() != "return")
+				{
+					error_count++;
+					std::cout << std::format("Failed - testcase {}: expected return token literal, got '{}'\n",
+											 tc, stmt->token_literal());
+				}
+				else
+				{
+					try
+					{
+						auto &return_stmt = dynamic_cast<ast::ReturnStatement &>(*stmt);
+						// Test passed for this case
+					}
+					catch (const std::bad_cast &)
+					{
+						error_count++;
+						std::cout << std::format("Failed - testcase {}: expected ReturnStatement type\n", tc);
+					}
+				}
+				tc++;
+			}
+		}
 	}
 
-	check_parser_errors(parser);
-
-	int tc = 1;
-	for (const auto &stmt : program->statements)
-	{
-		if (stmt->token_literal() != "return")
-		{
-			std::cout << std::format("testcase {}: failed - expected return token literal, got '{}'\n",
-									 tc, stmt->token_literal());
-			tc++;
-			continue;
-		}
-
-		try
-		{
-			auto &return_stmt = dynamic_cast<ast::ReturnStatement &>(*stmt);
-			std::cout << std::format("testcase {}: passed\n", tc);
-		}
-		catch (const std::bad_cast &)
-		{
-			std::cout << std::format("testcase {}: failed - expected ReturnStatement type\n", tc);
-		}
-		tc++;
-	}
+	if (error_count == 0)
+		std::cout << "Test for return statement parsing ended (all passed)\n\n";
+	else
+		std::cout << std::format("Test for return statement parsing ended ({} errors)\n\n", error_count);
 }

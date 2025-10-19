@@ -8,7 +8,8 @@
 
 void test_let_statement_string()
 {
-	std::cout << "Testing LetStatement string representation...\n";
+	std::cout << "Test for let statement string representation\n";
+	std::cout << "Test starting\n";
 
 	Token let_token(TokenType::LET, "let");
 	Token ident_token(TokenType::IDENT, "myVar");
@@ -18,13 +19,17 @@ void test_let_statement_string()
 
 	std::string expected = "let myVar;";
 	std::string actual = let_stmt->get_string();
+	int error_count = 0;
 
 	if (actual != expected)
 	{
-		std::cout << std::format("test_let_statement_string: failed - expected '{}', got '{}'\n",
+		error_count++;
+		std::cout << std::format("Failed - expected '{}', got '{}'\n",
 								 expected, actual);
-		return;
 	}
 
-	std::cout << "test_let_statement_string: passed\n";
+	if (error_count == 0)
+		std::cout << "Test for let statement string representation ended (all passed)\n\n";
+	else
+		std::cout << std::format("Test for let statement string representation ended ({} errors)\n\n", error_count);
 }

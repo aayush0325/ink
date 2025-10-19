@@ -10,7 +10,8 @@
 
 void test_program_string()
 {
-	std::cout << "Testing Program string representation...\n";
+	std::cout << "Test for program string representation\n";
+	std::cout << "Test starting\n";
 
 	auto program = std::make_unique<ast::Program>();
 
@@ -24,20 +25,25 @@ void test_program_string()
 
 	std::string expected = "let myVar;";
 	std::string actual = program->get_string();
+	int error_count = 0;
 
 	if (actual != expected)
 	{
-		std::cout << std::format("test_program_string: failed - expected '{}', got '{}'\n",
+		error_count++;
+		std::cout << std::format("Failed - expected '{}', got '{}'\n",
 								 expected, actual);
-		return;
 	}
 
-	std::cout << "test_program_string: passed\n";
+	if (error_count == 0)
+		std::cout << "Test for program string representation ended (all passed)\n";
+	else
+		std::cout << std::format("Test for program string representation ended ({} errors)\n", error_count);
 }
 
 void test_program_multiple_statements()
 {
-	std::cout << "Testing Program with multiple statements...\n";
+	std::cout << "Test for program multiple statements representation\n";
+	std::cout << "Test starting\n";
 
 	auto program = std::make_unique<ast::Program>();
 
@@ -56,32 +62,41 @@ void test_program_multiple_statements()
 
 	std::string expected = "let x;return ;";
 	std::string actual = program->get_string();
+	int error_count = 0;
 
 	if (actual != expected)
 	{
-		std::cout << std::format("test_program_multiple_statements: failed - expected '{}', got '{}'\n",
+		error_count++;
+		std::cout << std::format("Failed - expected '{}', got '{}'\n",
 								 expected, actual);
-		return;
 	}
 
-	std::cout << "test_program_multiple_statements: passed\n";
+	if (error_count == 0)
+		std::cout << "Test for program multiple statements representation ended (all passed)\n";
+	else
+		std::cout << std::format("Test for program multiple statements representation ended ({} errors)\n", error_count);
 }
 
 void test_empty_program()
 {
-	std::cout << "Testing empty Program...\n";
+	std::cout << "Test for empty program representation\n";
+	std::cout << "Test starting\n";
 
 	auto program = std::make_unique<ast::Program>();
 
 	std::string expected = "";
 	std::string actual = program->get_string();
+	int error_count = 0;
 
 	if (actual != expected)
 	{
-		std::cout << std::format("test_empty_program: failed - expected '{}', got '{}'\n",
+		error_count++;
+		std::cout << std::format("Failed - expected '{}', got '{}'\n",
 								 expected, actual);
-		return;
 	}
 
-	std::cout << "test_empty_program: passed\n";
+	if (error_count == 0)
+		std::cout << "Test for empty program representation ended (all passed)\n\n";
+	else
+		std::cout << std::format("Test for empty program representation ended ({} errors)\n\n", error_count);
 }

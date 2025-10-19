@@ -55,7 +55,7 @@ std::unique_ptr<ast::Expression> Parser::parse_expression(Precedence precedence)
 		return nullptr;
 	}
 	auto prefix = it->second;
-	std::unique_ptr<ast::Expression> left_exp = prefix();
+	auto left_exp = prefix();
 
 	while (peek_token.type != TokenType::SEMICOLON && precedence < peek_precedence())
 	{

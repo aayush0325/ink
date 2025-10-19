@@ -7,7 +7,8 @@
 
 void test_return_statement_string()
 {
-	std::cout << "Testing ReturnStatement string representation...\n";
+	std::cout << "Test for return statement string representation\n";
+	std::cout << "Test starting\n";
 
 	Token return_token(TokenType::RETURN, "return");
 
@@ -15,13 +16,17 @@ void test_return_statement_string()
 
 	std::string expected = "return ;";
 	std::string actual = return_stmt->get_string();
+	int error_count = 0;
 
 	if (actual != expected)
 	{
-		std::cout << std::format("test_return_statement_string: failed - expected '{}', got '{}'\n",
+		error_count++;
+		std::cout << std::format("Failed - expected '{}', got '{}'\n",
 								 expected, actual);
-		return;
 	}
 
-	std::cout << "test_return_statement_string: passed\n";
+	if (error_count == 0)
+		std::cout << "Test for return statement string representation ended (all passed)\n\n";
+	else
+		std::cout << std::format("Test for return statement string representation ended ({} errors)\n\n", error_count);
 }

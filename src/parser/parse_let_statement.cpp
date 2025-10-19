@@ -3,7 +3,7 @@
 
 std::unique_ptr<ast::LetStatement> Parser::parse_let_statement()
 {
-	std::unique_ptr<ast::LetStatement> statement = std::make_unique<ast::LetStatement>(current_token);
+	auto statement = std::make_unique<ast::LetStatement>(current_token);
 	if (!expect_peek(TokenType::IDENT))
 	{
 		return nullptr;

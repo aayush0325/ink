@@ -8,6 +8,9 @@
 
 void test_basic_TokenType()
 {
+	std::cout << "Test for basic token type recognition\n";
+	std::cout << "Test starting\n";
+
 	std::string input = "      =+(){},;";
 	std::vector<Token> expected_results = {
 		Token(TokenType::ASSIGN, "="),
@@ -22,20 +25,22 @@ void test_basic_TokenType()
 
 	Lexer lexer = Lexer(input);
 	u16 tc = 1;
-	bool success = true;
+	int error_count = 0;
 
 	for (auto &expected : expected_results)
 	{
 		Token actual = lexer.next_token();
 		if (actual != expected)
 		{
-			success = false;
-			std::cout << std::format("testcase {}: failed - expected token type '{}', got '{}'\n",
+			error_count++;
+			std::cout << std::format("Failed - testcase {}: expected token type '{}', got '{}'\n",
 									 tc, static_cast<int>(expected.type), static_cast<int>(actual.type));
 		}
 		tc++;
 	}
 
-	if (success)
-		std::cout << std::format("lexer tests for basic code: passed\n");
+	if (error_count == 0)
+		std::cout << std::format("Test for basic token type recognition ended (all passed)\n\n");
+	else
+		std::cout << std::format("Test for basic token type recognition ended ({} errors)\n\n", error_count);
 }

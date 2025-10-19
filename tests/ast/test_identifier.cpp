@@ -6,20 +6,25 @@
 
 void test_identifier_string()
 {
-	std::cout << "Testing Identifier string representation...\n";
+	std::cout << "Test for identifier string representation\n";
+	std::cout << "Test starting\n";
 
 	Token ident_token(TokenType::IDENT, "myVar");
 	ast::Identifier identifier(ident_token, "myVar");
 
 	std::string expected = "myVar";
 	std::string actual = identifier.get_string();
+	int error_count = 0;
 
 	if (actual != expected)
 	{
-		std::cout << std::format("test_identifier_string: failed - expected '{}', got '{}'\n",
+		error_count++;
+		std::cout << std::format("Failed - expected '{}', got '{}'\n",
 								 expected, actual);
-		return;
 	}
 
-	std::cout << "test_identifier_string: passed\n";
+	if (error_count == 0)
+		std::cout << "Test for identifier string representation ended (all passed)\n\n";
+	else
+		std::cout << std::format("Test for identifier string representation ended ({} errors)\n\n", error_count);
 }

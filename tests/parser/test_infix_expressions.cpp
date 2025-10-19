@@ -8,7 +8,8 @@
 
 void check_infix_expressions()
 {
-	std::cout << "starting test for infix expressions" << std::endl;
+	std::cout << "Test for infix expressions parsing\n";
+	std::cout << "Test starting\n";
 
 	struct InfixTest
 	{
@@ -28,6 +29,8 @@ void check_infix_expressions()
 		{"5 == 5;", 5, "==", 5},
 		{"5 != 5;", 5, "!=", 5}};
 
+	int error_count = 0;
+
 	for (const auto &test : infix_tests)
 	{
 		auto lexer = std::make_unique<Lexer>(test.input);
@@ -36,20 +39,22 @@ void check_infix_expressions()
 
 		if (!program)
 		{
-			std::cout << std::format("Program returned nullptr for input: {}",
+			error_count++;
+			std::cout << std::format("Failed - Program returned nullptr for input: {}",
 									 test.input)
 					  << std::endl;
-			return;
+			continue;
 		}
 
 		check_parser_errors(parser);
 
 		if (program->statements.size() != 1)
 		{
-			std::cout << std::format("program.Statements does not contain {} statements. got={}",
+			error_count++;
+			std::cout << std::format("Failed - program.Statements does not contain {} statements. got={}",
 									 1, program->statements.size())
 					  << std::endl;
-			return;
+			continue;
 		}
 
 		try
@@ -60,8 +65,9 @@ void check_infix_expressions()
 			// Test the left expression (should be an integer literal)
 			if (!exp.get_left())
 			{
-				std::cout << std::format("exp.Left is null") << std::endl;
-				return;
+				error_count++;
+				std::cout << std::format("Failed - exp.Left is null") << std::endl;
+				continue;
 			}
 
 			try
@@ -69,34 +75,38 @@ void check_infix_expressions()
 				auto left_int = dynamic_cast<ast::IntegerLiteral &>(*exp.get_left());
 				if (left_int.get_value() != test.left_value)
 				{
-					std::cout << std::format("exp.Left.Value is not {}. got={}",
+					error_count++;
+					std::cout << std::format("Failed - exp.Left.Value is not {}. got={}",
 											 test.left_value, left_int.get_value())
 							  << std::endl;
-					return;
+					continue;
 				}
 			}
 			catch (const std::bad_cast &)
 			{
-				std::cout << std::format("exp.Left is not ast.IntegerLiteral. got={}",
+				error_count++;
+				std::cout << std::format("Failed - exp.Left is not ast.IntegerLiteral. got={}",
 										 typeid(*exp.get_left()).name())
 						  << std::endl;
-				return;
+				continue;
 			}
 
 			// Test the operator
 			if (exp.get_operator() != test.operator_str)
 			{
-				std::cout << std::format("exp.Operator is not '{}'. got='{}'",
+				error_count++;
+				std::cout << std::format("Failed - exp.Operator is not '{}'. got='{}'",
 										 test.operator_str, exp.get_operator())
 						  << std::endl;
-				return;
+				continue;
 			}
 
 			// Test the right expression (should be an integer literal)
 			if (!exp.get_right())
 			{
-				std::cout << std::format("exp.Right is null") << std::endl;
-				return;
+				error_count++;
+				std::cout << std::format("Failed - exp.Right is null") << std::endl;
+				continue;
 			}
 
 			try
@@ -104,28 +114,34 @@ void check_infix_expressions()
 				auto right_int = dynamic_cast<ast::IntegerLiteral &>(*exp.get_right());
 				if (right_int.get_value() != test.right_value)
 				{
-					std::cout << std::format("exp.Right.Value is not {}. got={}",
+					error_count++;
+					std::cout << std::format("Failed - exp.Right.Value is not {}. got={}",
 											 test.right_value, right_int.get_value())
 							  << std::endl;
-					return;
+					continue;
 				}
 			}
 			catch (const std::bad_cast &)
 			{
-				std::cout << std::format("exp.Right is not ast.IntegerLiteral. got={}",
+				error_count++;
+				std::cout << std::format("Failed - exp.Right is not ast.IntegerLiteral. got={}",
 										 typeid(*exp.get_right()).name())
 						  << std::endl;
-				return;
+				continue;
 			}
 		}
 		catch (const std::bad_cast &)
 		{
-			std::cout << std::format("stmt is not ast.InfixExpression. got={}",
+			error_count++;
+			std::cout << std::format("Failed - stmt is not ast.InfixExpression. got={}",
 									 typeid(*program->statements[0]).name())
 					  << std::endl;
-			return;
+			continue;
 		}
 	}
 
-	std::cout << "test for infix expressions has passed!" << std::endl;
+	if (error_count == 0)
+		std::cout << "Test for infix expressions parsing ended (all passed)\n\n";
+	else
+		std::cout << std::format("Test for infix expressions parsing ended ({} errors)\n\n", error_count);
 }

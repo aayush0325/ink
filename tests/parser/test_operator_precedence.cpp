@@ -6,7 +6,8 @@
 
 void check_operator_precedence_parsing()
 {
-	std::cout << "starting test for operator precedence parsing" << std::endl;
+	std::cout << "Test for operator precedence parsing\n";
+	std::cout << "Test starting\n";
 
 	struct PrecedenceTest
 	{
@@ -40,6 +41,8 @@ void check_operator_precedence_parsing()
 		{"3 + 4 * 5 == 3 * 1 + 4 * 5",
 		 "((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))"}};
 
+	int error_count = 0;
+
 	for (const auto &test : tests)
 	{
 		auto lexer = std::make_unique<Lexer>(test.input);
@@ -48,10 +51,11 @@ void check_operator_precedence_parsing()
 
 		if (!program)
 		{
-			std::cout << std::format("Program returned nullptr for input: {}",
+			error_count++;
+			std::cout << std::format("Failed - Program returned nullptr for input: {}",
 									 test.input)
 					  << std::endl;
-			return;
+			continue;
 		}
 
 		check_parser_errors(parser);
@@ -59,12 +63,15 @@ void check_operator_precedence_parsing()
 		std::string actual = program->get_string();
 		if (actual != test.expected)
 		{
-			std::cout << std::format("expected={}, got={}",
+			error_count++;
+			std::cout << std::format("Failed - expected={}, got={}",
 									 test.expected, actual)
 					  << std::endl;
-			return;
 		}
 	}
 
-	std::cout << "test for operator precedence parsing has passed!" << std::endl;
+	if (error_count == 0)
+		std::cout << "Test for operator precedence parsing ended (all passed)\n";
+	else
+		std::cout << std::format("Test for operator precedence parsing ended ({} errors)\n", error_count);
 }

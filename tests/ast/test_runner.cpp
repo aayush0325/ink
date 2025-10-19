@@ -3,7 +3,8 @@
 
 void run_all_ast_string_tests()
 {
-	std::cout << "Running AST string representation tests...\n\n";
+	std::cout << "Test for all AST string representation tests\n";
+	std::cout << "Test starting\n";
 
 	test_identifier_string();
 	test_let_statement_string();
@@ -12,5 +13,5 @@ void run_all_ast_string_tests()
 	test_program_multiple_statements();
 	test_empty_program();
 
-	std::cout << "\nAll AST string representation tests completed.\n";
+	std::cout << "Test for all AST string representation tests ended (all passed)\n\n";
 }

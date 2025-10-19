@@ -8,6 +8,9 @@
 
 void test_full_code()
 {
+	std::cout << "Test for full code tokenization\n";
+	std::cout << "Test starting\n";
+
 	std::string input = R"(
 		let five = 5;
 		let ten = 10;
@@ -59,22 +62,23 @@ void test_full_code()
 
 	Lexer lexer = Lexer(input);
 	u16 tc = 1;
-
-	bool success = true;
+	int error_count = 0;
 
 	for (auto &expected : expected_results)
 	{
 		Token actual = lexer.next_token();
 		if (actual != expected)
 		{
-			success = false;
-			std::cout << std::format("testcase {}: failed - expected token type '{}' "
+			error_count++;
+			std::cout << std::format("Failed - testcase {}: expected token type '{}' "
 									 "({}), got '{}' ({})\n",
 									 tc, static_cast<int>(expected.type), expected.literal, static_cast<int>(actual.type), actual.literal);
 		}
 		tc++;
 	}
 
-	if (success)
-		std::cout << std::format("lexer tests for full code: passed\n");
+	if (error_count == 0)
+		std::cout << std::format("Test for full code tokenization ended (all passed)\n\n");
+	else
+		std::cout << std::format("Test for full code tokenization ended ({} errors)\n\n", error_count);
 }
