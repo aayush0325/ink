@@ -26,6 +26,16 @@ Parser::Parser(std::unique_ptr<Lexer> l) : lexer(std::move(l))
 									return prefix_parse_prefix_expression();
 								}});
 
+	prefix_lookup_table.insert({TokenType::TRUE, [this]()
+								{
+									return prefix_parse_boolean_literal();
+								}});
+
+	prefix_lookup_table.insert({TokenType::FALSE, [this]()
+								{
+									return prefix_parse_boolean_literal();
+								}});
+
 	infix_lookup_table.insert({TokenType::PLUS, [this](std::unique_ptr<ast::Expression> left)
 							   {
 								   return infix_parse_infix_expression(std::move(left));

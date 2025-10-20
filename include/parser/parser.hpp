@@ -14,6 +14,7 @@
 #include "ast/integer_literal.hpp"
 #include "ast/prefix_expression.hpp"
 #include "ast/infix_expression.hpp"
+#include "ast/boolean_literal.hpp"
 
 enum Precedence
 {
@@ -60,6 +61,7 @@ private:
 	std::unique_ptr<ast::Expression> prefix_parse_identifier();
 	std::unique_ptr<ast::Expression> prefix_parse_integer_literal();
 	std::unique_ptr<ast::Expression> prefix_parse_prefix_expression();
+	std::unique_ptr<ast::Expression> prefix_parse_boolean_literal();
 	std::unique_ptr<ast::Expression> infix_parse_infix_expression(std::unique_ptr<ast::Expression> left);
 
 public:

@@ -17,6 +17,12 @@ std::unique_ptr<ast::Expression> Parser::prefix_parse_integer_literal()
 	return integer_literal;
 }
 
+std::unique_ptr<ast::Expression> Parser::prefix_parse_boolean_literal()
+{
+	auto boolean_literal = std::make_unique<ast::BooleanLiteral>(current_token);
+	return boolean_literal;
+}
+
 std::unique_ptr<ast::Expression> Parser::prefix_parse_prefix_expression()
 {
 	auto expr = std::make_unique<ast::PrefixExpression>(current_token, current_token.literal);
