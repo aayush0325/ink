@@ -30,3 +30,12 @@ std::unique_ptr<ast::Expression> Parser::prefix_parse_prefix_expression()
 	expr->set_right_expression(parse_expression(Precedence::PREFIX));
 	return expr;
 }
+
+std::unique_ptr<ast::Expression> Parser::prefix_parse_grouped_expression()
+{
+	next_token();
+	auto expr = parse_expression(Precedence::LOWEST);
+	if (!expect_peek(TokenType::RPAREN))
+		return nullptr;
+	return expr;
+}

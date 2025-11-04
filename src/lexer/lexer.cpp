@@ -80,12 +80,14 @@ Token Lexer::next_token()
 		if (is_letter(ch))
 		{
 			std::string str = read_identifier();
-			return Token(Token::lookupIdent(str), str); // early return to skip the read_char()
+			return Token(Token::lookupIdent(str),
+						 str); // early return to skip the read_char()
 		}
 		else if (is_number(ch))
 		{
 			std::string number = read_number();
-			return Token(TokenType::INT, number); // early return to skip the read_char()
+			return Token(TokenType::INT,
+						 number); // early return to skip the read_char()
 		}
 		else
 			tok = Token(TokenType::ILLEGAL, "");

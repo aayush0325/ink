@@ -63,6 +63,7 @@ private:
 	std::unique_ptr<ast::Expression> prefix_parse_prefix_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_boolean_literal();
 	std::unique_ptr<ast::Expression> infix_parse_infix_expression(std::unique_ptr<ast::Expression> left);
+	std::unique_ptr<ast::Expression> prefix_parse_grouped_expression();
 
 public:
 	explicit Parser(std::unique_ptr<Lexer> l);
