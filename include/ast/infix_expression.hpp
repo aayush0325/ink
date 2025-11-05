@@ -15,11 +15,11 @@ namespace ast
 			: infix_token(infix_token), left(std::move(left)), right(nullptr), infix_operator(infix_operator) {}
 
 		void set_right(std::unique_ptr<Expression> right);
-		
+
 		// Getter methods for testing
-		const std::unique_ptr<Expression>& get_left() const { return left; }
-		const std::unique_ptr<Expression>& get_right() const { return right; }
-		const std::string& get_operator() const { return infix_operator; }
+		const std::unique_ptr<Expression> &get_left() const { return left; }
+		const std::unique_ptr<Expression> &get_right() const { return right; }
+		const std::string &get_operator() const { return infix_operator; }
 
 	private:
 		Token infix_token;
