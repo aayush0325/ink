@@ -17,3 +17,4 @@ void check_prefix_expressions();
 void check_operator_precedence_parsing();
 void check_infix_expressions();
 void check_grouped_expressions();
+void check_if_expressions();

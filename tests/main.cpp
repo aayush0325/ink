@@ -18,4 +18,5 @@ int main()
 	check_operator_precedence_parsing();
 	check_infix_expressions();
 	check_grouped_expressions();
+	check_if_expressions();
 }
