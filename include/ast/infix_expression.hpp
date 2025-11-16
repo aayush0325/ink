@@ -5,6 +5,7 @@
 
 namespace ast
 {
+	// Type of expression that takes a left and right to an operator like  1 + 2
 	class InfixExpression : public Expression
 	{
 	public:

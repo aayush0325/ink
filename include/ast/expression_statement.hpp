@@ -6,6 +6,7 @@
 
 namespace ast
 {
+	// Statements That are just an expression.
 	class ExpressionStatement : public Statement
 	{
 	public:

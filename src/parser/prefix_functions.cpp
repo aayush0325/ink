@@ -1,5 +1,14 @@
 #include "parser/parser.hpp"
 
+/*
+	Prefix parse functions are functions to parse a prefix expression.
+	A prefix token is an token that comes to the left of an expression, we don't
+	need any parameters to parse this.
+
+	For example:
+		!false, -2, 1, true
+*/
+
 std::unique_ptr<ast::Expression> Parser::prefix_parse_identifier()
 {
 	auto ident = std::make_unique<ast::Identifier>(current_token, current_token.literal);

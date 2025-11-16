@@ -5,6 +5,7 @@
 
 namespace ast
 {
+	// true or false
 	class BooleanLiteral : public ast::Expression
 	{
 	public:

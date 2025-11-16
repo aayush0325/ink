@@ -5,6 +5,7 @@
 
 namespace ast
 {
+	// Type of expressions that just need one value, like let x = !false;
 	class PrefixExpression : public Expression
 	{
 		Token token;

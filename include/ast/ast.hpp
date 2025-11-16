@@ -4,6 +4,12 @@
 
 namespace ast
 {
+	/*
+		Interfaces for all the Nodes in our AST.
+		The top level "Program" node has a vector of "Statement" Nodes and a
+		"Statement" node may have many types of "Expression" nodes.
+	*/
+
 	// root abstract base class of a node in our AST
 	class Node
 	{

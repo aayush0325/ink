@@ -17,7 +17,7 @@ std::unique_ptr<ast::LetStatement> Parser::parse_let_statement()
 		return nullptr;
 	}
 
-	// note that expect_peek() has advanced a token again
+	// TODO: parse complete expression here
 	while (current_token.type != TokenType::SEMICOLON)
 		next_token();
 

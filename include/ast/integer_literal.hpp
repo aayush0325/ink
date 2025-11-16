@@ -5,6 +5,7 @@
 
 namespace ast
 {
+	// Just a number
 	class IntegerLiteral : public Expression
 	{
 		i64 integer_value;

@@ -6,6 +6,7 @@
 
 namespace ast
 {
+	// Return statement, return 1;
 	class ReturnStatement : public Statement
 	{
 	public:

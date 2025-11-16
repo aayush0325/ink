@@ -5,6 +5,7 @@
 
 namespace ast
 {
+	// variables
 	class Identifier : public Expression
 	{
 	public:

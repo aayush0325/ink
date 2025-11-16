@@ -7,6 +7,7 @@
 
 namespace ast
 {
+	// Assignment statement: let <Identifier> = <Expression>
 	class LetStatement : public Statement
 	{
 	public:

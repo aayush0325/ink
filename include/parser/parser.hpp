@@ -46,6 +46,7 @@ private:
 
 	Precedence current_precedence();
 
+	// Parsing helpers
 	std::unique_ptr<ast::Statement> parse_statement();
 
 	std::unique_ptr<ast::LetStatement> parse_let_statement();
@@ -56,8 +57,10 @@ private:
 
 	std::unique_ptr<ast::Expression> parse_expression(Precedence x);
 
+	// Helper function to insert errors based on the next token
 	void peek_error(const TokenType &t);
 
+	// Prefix and Infix parse functions
 	std::unique_ptr<ast::Expression> prefix_parse_identifier();
 	std::unique_ptr<ast::Expression> prefix_parse_integer_literal();
 	std::unique_ptr<ast::Expression> prefix_parse_prefix_expression();
