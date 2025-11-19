@@ -16,6 +16,7 @@
 #include "ast/infix_expression.hpp"
 #include "ast/boolean_literal.hpp"
 #include "ast/if_expression.hpp"
+#include "ast/function_literal.hpp"
 
 enum Precedence
 {
@@ -58,6 +59,8 @@ private:
 
 	std::unique_ptr<ast::BlockStatement> parse_block_statement();
 
+	std::vector<std::unique_ptr<ast::Identifier>> parse_function_parameters();
+
 	std::unique_ptr<ast::Expression> parse_expression(Precedence x);
 
 	// Helper function to insert errors based on the next token
@@ -71,6 +74,7 @@ private:
 	std::unique_ptr<ast::Expression> infix_parse_infix_expression(std::unique_ptr<ast::Expression> left);
 	std::unique_ptr<ast::Expression> prefix_parse_grouped_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_if_expression();
+	std::unique_ptr<ast::Expression> prefix_parse_function_literal();
 
 public:
 	explicit Parser(std::unique_ptr<Lexer> l);
