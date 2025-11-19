@@ -25,7 +25,9 @@ target_link_libraries(ink interpretr_lib)
 # STEP 4: Collect test files (excluding main.cpp from src/)
 file(GLOB_RECURSE TEST_FILES tests/*.cpp)
 
+find_package(GTest CONFIG REQUIRED)
+
 # STEP 5: Create the test executable  
 # Links test files + the library (but NOT src/main.cpp)
 add_executable(tests ${TEST_FILES})
-target_link_libraries(tests interpretr_lib)
+target_link_libraries(tests interpretr_lib GTest::gtest GTest::gtest_main)
