@@ -9,6 +9,7 @@ const std::map<TokenType, Precedence> Parser::precedences = {
 	{TokenType::MINUS, SUM},
 	{TokenType::SLASH, PRODUCT},
 	{TokenType::ASTERISK, PRODUCT},
+	{TokenType::LPAREN, CALL},
 };
 
 void Parser::next_token()

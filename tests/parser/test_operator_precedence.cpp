@@ -47,7 +47,13 @@ void check_operator_precedence_parsing()
 		{"3 > 5 == false",
 		 "((3 > 5) == false)"},
 		{"3 < 5 == true",
-		 "((3 < 5) == true)"}};
+		 "((3 < 5) == true)"},
+		{"a + add(b * c) + d",
+		 "((a + add((b * c))) + d)"},
+		{"add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8))",
+		 "add(a, b, 1, (2 * 3), (4 + 5), add(6, (7 * 8)))"},
+		{"add(a + b + c * d / f + g)",
+		 "add((((a + b) + ((c * d) / f)) + g))"}};
 
 	int error_count = 0;
 

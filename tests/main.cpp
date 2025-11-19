@@ -21,4 +21,5 @@ int main()
 	check_if_expressions();
 	check_function_literal();
 	check_function_parameter_parsing();
+	check_call_expressions();
 }

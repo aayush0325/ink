@@ -20,3 +20,4 @@ void check_grouped_expressions();
 void check_if_expressions();
 void check_function_literal();
 void check_function_parameter_parsing();
+void check_call_expressions();

@@ -17,6 +17,7 @@
 #include "ast/boolean_literal.hpp"
 #include "ast/if_expression.hpp"
 #include "ast/function_literal.hpp"
+#include "ast/call_expression.hpp"
 
 enum Precedence
 {
@@ -60,6 +61,7 @@ private:
 	std::unique_ptr<ast::BlockStatement> parse_block_statement();
 
 	std::vector<std::unique_ptr<ast::Identifier>> parse_function_parameters();
+	std::vector<std::unique_ptr<ast::Expression>> parse_call_arguments();
 
 	std::unique_ptr<ast::Expression> parse_expression(Precedence x);
 
@@ -72,6 +74,7 @@ private:
 	std::unique_ptr<ast::Expression> prefix_parse_prefix_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_boolean_literal();
 	std::unique_ptr<ast::Expression> infix_parse_infix_expression(std::unique_ptr<ast::Expression> left);
+	std::unique_ptr<ast::Expression> infix_parse_call_expression(std::unique_ptr<ast::Expression> left);
 	std::unique_ptr<ast::Expression> prefix_parse_grouped_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_if_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_function_literal();
