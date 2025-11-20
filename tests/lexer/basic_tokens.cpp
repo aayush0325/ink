@@ -23,10 +23,7 @@ TEST(LexerTest, BasicInputTokenizer)
 	for (size_t i = 0; i < expected.size(); ++i)
 	{
 		Token actual = lexer.next_token();
-		EXPECT_EQ(actual.type, expected[i].type)
-			<< "Token type mismatch at index " << i;
-
-		EXPECT_EQ(actual.literal, expected[i].literal)
-			<< "Token literal mismatch at index " << i;
+		EXPECT_EQ(actual, expected[i])
+			<< "Token mismatch at index " << i;
 	}
 }

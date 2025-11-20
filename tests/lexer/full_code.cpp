@@ -64,6 +64,6 @@ TEST(LexerTest, FullCodeSampleTokenizer)
 	{
 		Token actual = lexer.next_token();
 		EXPECT_EQ(expected_results[i], actual)
-			<< "Token Type mismatch at index " << i;
+			<< "Token mismatch at index " << i;
 	}
 }

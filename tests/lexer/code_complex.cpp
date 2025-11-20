@@ -111,6 +111,6 @@ TEST(LexerTest, ComplexCodeTokenizer)
 	{
 		Token actual = lexer.next_token();
 		EXPECT_EQ(actual, expected_results[i])
-			<< "Token Type mismatch at index " << i;
+			<< "Token mismatch at index " << i;
 	}
 }
