@@ -5,8 +5,6 @@
 
 int main(int argc, char **argv)
 {
-	test_full_code();
-	test_code_complex();
 	test_let_statement_noexpr();
 	test_return_statement();
 	run_all_ast_string_tests();

@@ -5,11 +5,10 @@
 #include <format>
 #include <iostream>
 #include <vector>
+#include <gtest/gtest.h>
 
-void test_code_complex()
+TEST(LexerTest, ComplexCodeTokenizer)
 {
-	std::cout << "Test for complex code tokenization\n";
-	std::cout << "Test starting\n";
 
 	std::string input = R"(
 		let five = 5;
@@ -107,26 +106,11 @@ void test_code_complex()
 	};
 
 	Lexer lexer = Lexer(input);
-	u16 tc = 1;
-	int error_count = 0;
 
-	for (auto &expected : expected_results)
+	for (size_t i = 0; i < expected_results.size(); i++)
 	{
 		Token actual = lexer.next_token();
-		if (actual != expected)
-		{
-			error_count++;
-			std::cout << std::format("Failed - testcase {}: expected token type '{}' "
-									 "({}), got '{}' ({})\n",
-									 tc, static_cast<int>(expected.type),
-									 expected.literal, static_cast<int>(actual.type),
-									 actual.literal);
-		}
-		tc++;
+		EXPECT_EQ(actual, expected_results[i])
+			<< "Token Type mismatch at index " << i;
 	}
-
-	if (error_count == 0)
-		std::cout << std::format("Test for complex code tokenization ended (all passed)\n\n");
-	else
-		std::cout << std::format("Test for complex code tokenization ended ({} errors)\n\n", error_count);
 }

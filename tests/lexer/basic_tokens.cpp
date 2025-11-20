@@ -4,7 +4,7 @@
 #include "token/token.hpp"
 #include "types/types.hpp"
 
-TEST(LexerTest, BasicTokenTypeRecognition)
+TEST(LexerTest, BasicInputTokenizer)
 {
 	std::string input = "      =+(){},;";
 	std::vector<Token> expected = {
