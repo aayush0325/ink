@@ -1,18 +1,13 @@
+#include <gtest/gtest.h>
+
 #include "lexer/lexer.hpp"
-#include "tests/lexer/test.hpp"
 #include "token/token.hpp"
 #include "types/types.hpp"
-#include <format>
-#include <iostream>
-#include <vector>
 
-void test_basic_TokenType()
+TEST(LexerTest, BasicTokenTypeRecognition)
 {
-	std::cout << "Test for basic token type recognition\n";
-	std::cout << "Test starting\n";
-
 	std::string input = "      =+(){},;";
-	std::vector<Token> expected_results = {
+	std::vector<Token> expected = {
 		Token(TokenType::ASSIGN, "="),
 		Token(TokenType::PLUS, "+"),
 		Token(TokenType::LPAREN, "("),
@@ -23,24 +18,15 @@ void test_basic_TokenType()
 		Token(TokenType::SEMICOLON, ";"),
 	};
 
-	Lexer lexer = Lexer(input);
-	u16 tc = 1;
-	int error_count = 0;
+	Lexer lexer(input);
 
-	for (auto &expected : expected_results)
+	for (size_t i = 0; i < expected.size(); ++i)
 	{
 		Token actual = lexer.next_token();
-		if (actual != expected)
-		{
-			error_count++;
-			std::cout << std::format("Failed - testcase {}: expected token type '{}', got '{}'\n",
-									 tc, static_cast<int>(expected.type), static_cast<int>(actual.type));
-		}
-		tc++;
-	}
+		EXPECT_EQ(actual.type, expected[i].type)
+			<< "Token type mismatch at index " << i;
 
-	if (error_count == 0)
-		std::cout << std::format("Test for basic token type recognition ended (all passed)\n\n");
-	else
-		std::cout << std::format("Test for basic token type recognition ended ({} errors)\n\n", error_count);
+		EXPECT_EQ(actual.literal, expected[i].literal)
+			<< "Token literal mismatch at index " << i;
+	}
 }

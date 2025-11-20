@@ -1,10 +1,10 @@
 #include "tests/lexer/test.hpp"
 #include "tests/parser/test.hpp"
 #include "tests/ast/test.hpp"
+#include <gtest/gtest.h>
 
-int main()
+int main(int argc, char **argv)
 {
-	test_basic_TokenType();
 	test_full_code();
 	test_code_complex();
 	test_let_statement_noexpr();
@@ -22,4 +22,6 @@ int main()
 	check_function_literal();
 	check_function_parameter_parsing();
 	check_call_expressions();
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }
