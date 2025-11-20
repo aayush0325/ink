@@ -5,170 +5,49 @@
 #include "ast/boolean_literal.hpp"
 #include <format>
 #include <iostream>
+#include <gtest/gtest.h>
 
-bool test_boolean_literal(ast::Expression *exp, bool expected_value)
+TEST(ParserTest, BooleanExpressions)
 {
-	try
+	std::vector<std::string> inputs = {
+		"true;",
+		"false;",
+	};
+
+	std::vector<bool> expected_values = {
+		true,
+		false,
+	};
+
+	for (size_t i = 0; i < inputs.size(); i++)
 	{
-		ast::BooleanLiteral *boolean_literal = dynamic_cast<ast::BooleanLiteral *>(exp);
-		if (!boolean_literal)
-		{
-			std::cout << std::format("Failed - exp not *ast.BooleanLiteral. got type error\n");
-			return false;
-		}
+		auto lexer = std::make_unique<Lexer>(inputs[i]);
+		Parser parser(std::move(lexer));
+		auto program = parser.parse_program();
 
-		if (boolean_literal->get_value() != expected_value)
-		{
-			std::cout << std::format("Failed - boolean_literal.Value not {}. got={}\n",
-									 expected_value, boolean_literal->get_value());
-			return false;
-		}
-
-		std::string expected_token = expected_value ? "true" : "false";
-		if (boolean_literal->token_literal() != expected_token)
-		{
-			std::cout << std::format("Failed - boolean_literal.TokenLiteral not {}. got={}\n",
-									 expected_token, boolean_literal->token_literal());
-			return false;
-		}
-
-		return true;
-	}
-	catch (const std::bad_cast &)
-	{
-		std::cout << "Failed - dynamic_cast failed for boolean literal\n";
-		return false;
-	}
-}
-
-void check_boolean_literal_statement()
-{
-	std::cout << "Test for boolean literal expression parsing\n";
-	std::cout << "Test starting\n";
-
-	std::string input = "true;";
-	auto lexer = std::make_unique<Lexer>(input);
-	auto parser = Parser(std::move(lexer));
-	auto program = parser.parse_program();
-	int error_count = 0;
-
-	if (!program)
-	{
-		error_count++;
-		std::cout << "Failed - Program returned nullptr\n";
-	}
-
-	if (program && error_count == 0)
-	{
+		ASSERT_NE(program, nullptr) << "Program returned nullptr";
 		check_parser_errors(parser);
 
-		if (program->statements.size() != 1)
-		{
-			error_count++;
-			std::cout << std::format("Failed - program has not enough statements. got={}",
-									 program->statements.size())
-					  << std::endl;
-		}
+		ASSERT_EQ(program->statements.size(), 1)
+			<< "Program should have exactly 1 statement";
 
-		if (error_count == 0)
-		{
-			try
-			{
-				ast::ExpressionStatement &stmt = dynamic_cast<ast::ExpressionStatement &>(*program->statements[0]);
-				ast::BooleanLiteral &boolean_literal = dynamic_cast<ast::BooleanLiteral &>(*stmt.expression);
+		auto *stmt = dynamic_cast<ast::ExpressionStatement *>(program->statements[0].get());
+		ASSERT_NE(stmt, nullptr) << "Statement is not an ExpressionStatement";
 
-				if (boolean_literal.get_value() != true)
-				{
-					error_count++;
-					std::cout << std::format("Failed - literal.Value not {}. got={}", true,
-											 boolean_literal.get_value())
-							  << std::endl;
-				}
+		auto *bool_lit = dynamic_cast<ast::BooleanLiteral *>(stmt->expression.get());
+		ASSERT_NE(bool_lit, nullptr) << "Expression is not a BooleanLiteral";
 
-				if (boolean_literal.token_literal() != "true")
-				{
-					error_count++;
-					std::cout << std::format("Failed - literal.TokenLiteral not {}. got={}", "true",
-											 boolean_literal.token_literal())
-							  << std::endl;
-				}
-			}
-			catch (std::bad_cast)
-			{
-				error_count++;
-				std::cout << "Failed - Invalid type returned\n";
-			}
-		}
+		// Compare expected boolean value
+		EXPECT_EQ(bool_lit->get_value(), expected_values[i]);
+
+		// Compare token literal
+		EXPECT_EQ(bool_lit->token_literal(), (expected_values[i] ? "true" : "false"));
+
+		// If == is implemented, assert against a constructed literal
+		Token tok(expected_values[i] ? TokenType::TRUE : TokenType::FALSE,
+				  expected_values[i] ? "true" : "false");
+
+		ast::BooleanLiteral expected_bool(tok);
+		EXPECT_EQ(*bool_lit, expected_bool);
 	}
-
-	if (error_count == 0)
-		std::cout << "Test for boolean literal expression parsing ended (all passed)\n\n";
-	else
-		std::cout << std::format("Test for boolean literal expression parsing ended ({} errors)\n\n", error_count);
-}
-
-void check_false_boolean_literal_statement()
-{
-	std::cout << "Test for false boolean literal expression parsing\n";
-	std::cout << "Test starting\n";
-
-	std::string input = "false;";
-	auto lexer = std::make_unique<Lexer>(input);
-	auto parser = Parser(std::move(lexer));
-	auto program = parser.parse_program();
-	int error_count = 0;
-
-	if (!program)
-	{
-		error_count++;
-		std::cout << "Failed - Program returned nullptr\n";
-	}
-
-	if (program && error_count == 0)
-	{
-		check_parser_errors(parser);
-
-		if (program->statements.size() != 1)
-		{
-			error_count++;
-			std::cout << std::format("Failed - program has not enough statements. got={}",
-									 program->statements.size())
-					  << std::endl;
-		}
-
-		if (error_count == 0)
-		{
-			try
-			{
-				ast::ExpressionStatement &stmt = dynamic_cast<ast::ExpressionStatement &>(*program->statements[0]);
-				ast::BooleanLiteral &boolean_literal = dynamic_cast<ast::BooleanLiteral &>(*stmt.expression);
-
-				if (boolean_literal.get_value() != false)
-				{
-					error_count++;
-					std::cout << std::format("Failed - literal.Value not {}. got={}",
-											 false, boolean_literal.get_value())
-							  << std::endl;
-				}
-
-				if (boolean_literal.token_literal() != "false")
-				{
-					error_count++;
-					std::cout << std::format("Failed - literal.TokenLiteral not {}. got={}", "false",
-											 boolean_literal.token_literal())
-							  << std::endl;
-				}
-			}
-			catch (std::bad_cast)
-			{
-				error_count++;
-				std::cout << "Failed - Invalid type returned\n";
-			}
-		}
-	}
-
-	if (error_count == 0)
-		std::cout << "Test for false boolean literal expression parsing ended (all passed)\n\n";
-	else
-		std::cout << std::format("Test for false boolean literal expression parsing ended ({} errors)\n\n", error_count);
 }

@@ -10,8 +10,6 @@ int main(int argc, char **argv)
 	run_all_ast_string_tests();
 	check_identifier_expression_statements();
 	check_integer_literal_statement();
-	check_boolean_literal_statement();
-	check_false_boolean_literal_statement();
 	check_prefix_expressions();
 	check_operator_precedence_parsing();
 	check_infix_expressions();

@@ -15,6 +15,8 @@ namespace ast
 
 		explicit BooleanLiteral(Token token) : token(token), value(token.type == TokenType::TRUE) {}
 
+		bool operator==(const BooleanLiteral &l) const;
+
 	private:
 		Token token;
 		bool value;
