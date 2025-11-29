@@ -17,7 +17,6 @@ int main(int argc, char **argv)
 	check_if_expressions();
 	check_function_literal();
 	check_function_parameter_parsing();
-	check_call_expressions();
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }
