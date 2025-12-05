@@ -2,15 +2,12 @@
 #include "ast/identifier.hpp"
 #include "token/token.hpp"
 #include "types/types.hpp"
+#include <gtest/gtest.h>
 #include <format>
-#include <iostream>
 #include <memory>
 
-void test_let_statement_string()
+TEST(ASTTest, LetStatementString)
 {
-	std::cout << "Test for let statement string representation\n";
-	std::cout << "Test starting\n";
-
 	Token let_token(TokenType::LET, "let");
 	Token ident_token(TokenType::IDENT, "myVar");
 
@@ -19,17 +16,6 @@ void test_let_statement_string()
 
 	std::string expected = "let myVar;";
 	std::string actual = let_stmt->get_string();
-	int error_count = 0;
 
-	if (actual != expected)
-	{
-		error_count++;
-		std::cout << std::format("Failed - expected '{}', got '{}'\n",
-								 expected, actual);
-	}
-
-	if (error_count == 0)
-		std::cout << "Test for let statement string representation ended (all passed)\n\n";
-	else
-		std::cout << std::format("Test for let statement string representation ended ({} errors)\n\n", error_count);
+	EXPECT_EQ(actual, expected);
 }

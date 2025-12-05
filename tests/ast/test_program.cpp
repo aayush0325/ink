@@ -4,15 +4,12 @@
 #include "ast/identifier.hpp"
 #include "token/token.hpp"
 #include "types/types.hpp"
+#include <gtest/gtest.h>
 #include <format>
-#include <iostream>
 #include <memory>
 
-void test_program_string()
+TEST(ASTTest, ProgramString)
 {
-	std::cout << "Test for program string representation\n";
-	std::cout << "Test starting\n";
-
 	auto program = std::make_unique<ast::Program>();
 
 	Token let_token(TokenType::LET, "let");
@@ -25,26 +22,12 @@ void test_program_string()
 
 	std::string expected = "let myVar;";
 	std::string actual = program->get_string();
-	int error_count = 0;
 
-	if (actual != expected)
-	{
-		error_count++;
-		std::cout << std::format("Failed - expected '{}', got '{}'\n",
-								 expected, actual);
-	}
-
-	if (error_count == 0)
-		std::cout << "Test for program string representation ended (all passed)\n";
-	else
-		std::cout << std::format("Test for program string representation ended ({} errors)\n", error_count);
+	EXPECT_EQ(actual, expected);
 }
 
-void test_program_multiple_statements()
+TEST(ASTTest, ProgramMultipleStatements)
 {
-	std::cout << "Test for program multiple statements representation\n";
-	std::cout << "Test starting\n";
-
 	auto program = std::make_unique<ast::Program>();
 
 	Token let_token1(TokenType::LET, "let");
@@ -62,41 +45,16 @@ void test_program_multiple_statements()
 
 	std::string expected = "let x;return ;";
 	std::string actual = program->get_string();
-	int error_count = 0;
 
-	if (actual != expected)
-	{
-		error_count++;
-		std::cout << std::format("Failed - expected '{}', got '{}'\n",
-								 expected, actual);
-	}
-
-	if (error_count == 0)
-		std::cout << "Test for program multiple statements representation ended (all passed)\n";
-	else
-		std::cout << std::format("Test for program multiple statements representation ended ({} errors)\n", error_count);
+	EXPECT_EQ(actual, expected);
 }
 
-void test_empty_program()
+TEST(ASTTest, EmptyProgram)
 {
-	std::cout << "Test for empty program representation\n";
-	std::cout << "Test starting\n";
-
 	auto program = std::make_unique<ast::Program>();
 
 	std::string expected = "";
 	std::string actual = program->get_string();
-	int error_count = 0;
 
-	if (actual != expected)
-	{
-		error_count++;
-		std::cout << std::format("Failed - expected '{}', got '{}'\n",
-								 expected, actual);
-	}
-
-	if (error_count == 0)
-		std::cout << "Test for empty program representation ended (all passed)\n\n";
-	else
-		std::cout << std::format("Test for empty program representation ended ({} errors)\n\n", error_count);
+	EXPECT_EQ(actual, expected);
 }

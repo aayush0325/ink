@@ -1,14 +1,22 @@
 #include "parser/parser.hpp"
 #include "tests/parser/test.hpp"
+#include <gtest/gtest.h>
 #include <format>
 #include <iostream>
 
 void check_parser_errors(Parser &parser)
 {
-	if (parser.get_errors().size() == 0)
+	auto errors = parser.get_errors();
+	if (errors.empty())
+	{
 		return;
-	std::cout << std::format("error: parser has {} errors\n",
-							 parser.get_errors().size());
-	for (auto &it : parser.get_errors())
-		std::cout << std::format("  - {}\n", it);
+	}
+
+	std::string error_msg = std::format("Parser has {} errors:\n", errors.size());
+	for (const auto &err : errors)
+	{
+		error_msg += std::format("  - {}\n", err);
+	}
+	
+	FAIL() << error_msg;
 }
