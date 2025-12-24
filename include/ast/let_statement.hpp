@@ -15,6 +15,8 @@ namespace ast
 		virtual std::string get_string();
 		explicit LetStatement(Token token) : token(token), ident(nullptr), value(nullptr) {}
 
+		void set_value(std::unique_ptr<Expression> expr);
+
 		std::unique_ptr<Identifier> ident;
 
 	private:

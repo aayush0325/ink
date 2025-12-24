@@ -17,8 +17,10 @@ std::unique_ptr<ast::LetStatement> Parser::parse_let_statement()
 		return nullptr;
 	}
 
-	// TODO: parse complete expression here
-	while (current_token.type != TokenType::SEMICOLON)
+	next_token(); // skip the '=' token
+	statement->set_value(parse_expression(Precedence::LOWEST));
+
+	if (peek_token.type == TokenType::SEMICOLON)
 		next_token();
 
 	return statement;

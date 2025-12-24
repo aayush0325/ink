@@ -1,20 +1,49 @@
 #include "repl/repl.hpp"
 #include "lexer/lexer.hpp"
+#include "parser/parser.hpp"
 #include "token/token.hpp"
 #include <iostream>
 #include <string>
+#include <memory>
+
+void print_parser_errors(const std::vector<std::string> &errors)
+{
+	for (const auto &msg : errors)
+	{
+		std::cout << "\t" << msg << "\n";
+	}
+}
 
 void init_repl()
 {
 	std::string input;
-	while (input != "quit")
+	while (true)
 	{
 		std::cout << PROMPT;
-		std::getline(std::cin, input); // read the whole line instead of the string till first whitespace
-		Lexer lexer = Lexer(input);
-		for (Token tok = lexer.next_token(); tok.type != TokenType::E_O_F; tok = lexer.next_token())
+		if (!std::getline(std::cin, input))
 		{
-			std::cout << tok << std::endl;
+			return;
 		}
+		if (input == "quit")
+		{
+			return;
+		}
+		if (input.empty())
+		{
+			continue;
+		}
+
+		auto lexer = std::make_unique<Lexer>(input);
+		auto parser = std::make_unique<Parser>(std::move(lexer));
+		auto program = parser->parse_program();
+
+		auto errors = parser->get_errors();
+		if (!errors.empty())
+		{
+			print_parser_errors(errors);
+			continue;
+		}
+
+		std::cout << program->get_string() << "\n";
 	}
 }

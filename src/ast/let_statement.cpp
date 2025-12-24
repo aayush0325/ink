@@ -11,8 +11,14 @@ std::string ast::LetStatement::get_string()
 	result += token_literal();
 	result += " ";
 	result += ident->get_string();
-	while (value != nullptr)
+	result += " = ";
+	if (value != nullptr)
 		result += value->get_string();
 	result += ";";
 	return result;
+}
+
+void ast::LetStatement::set_value(std::unique_ptr<ast::Expression> expr)
+{
+	value = std::move(expr);
 }
