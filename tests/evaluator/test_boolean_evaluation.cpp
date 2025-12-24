@@ -9,7 +9,7 @@
 #include <typeinfo>
 
 // Helper function to evaluate input string
-std::unique_ptr<Object> testEval(const std::string &input)
+static std::unique_ptr<Object> testEval(const std::string &input)
 {
 	auto lexer = std::make_unique<Lexer>(input);
 	Parser parser(std::move(lexer));
@@ -19,7 +19,7 @@ std::unique_ptr<Object> testEval(const std::string &input)
 }
 
 // Helper function to test boolean object
-void testBooleanObject(Object *obj, bool expected)
+static void testBooleanObject(Object *obj, bool expected)
 {
 	auto *boolean_obj = dynamic_cast<Boolean *>(obj);
 	ASSERT_NE(boolean_obj, nullptr) 

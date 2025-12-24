@@ -9,28 +9,16 @@
 
 namespace evaluator
 {
-	// Singleton instances
-	static Null NULL_INSTANCE{};
-	static Boolean TRUE_INSTANCE{true};
-	static Boolean FALSE_INSTANCE{false};
-
-	// Helper function to get NULL singleton
+	// Helper function to get NULL object
 	static std::unique_ptr<Object> getNull()
 	{
-		// Return NULL singleton with no-op deleter
-		return std::unique_ptr<Object>(&NULL_INSTANCE, [](Object *) {});
+		return std::make_unique<Null>();
 	}
 
-	// Helper function to convert native bool to Boolean object (returns singleton)
+	// Helper function to convert native bool to Boolean object
 	static std::unique_ptr<Object> nativeBoolToBooleanObject(bool input)
 	{
-		if (input)
-		{
-			// Return TRUE singleton with no-op deleter
-			return std::unique_ptr<Object>(&TRUE_INSTANCE, [](Object *) {});
-		}
-		// Return FALSE singleton with no-op deleter
-		return std::unique_ptr<Object>(&FALSE_INSTANCE, [](Object *) {});
+		return std::make_unique<Boolean>(input);
 	}
 
 	// Helper function to evaluate a list of statements
