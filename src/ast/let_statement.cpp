@@ -11,9 +11,11 @@ std::string ast::LetStatement::get_string()
 	result += token_literal();
 	result += " ";
 	result += ident->get_string();
-	result += " = ";
 	if (value != nullptr)
+	{
+		result += " = ";
 		result += value->get_string();
+	}
 	result += ";";
 	return result;
 }

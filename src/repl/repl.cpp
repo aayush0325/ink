@@ -1,6 +1,7 @@
 #include "repl/repl.hpp"
 #include "lexer/lexer.hpp"
 #include "parser/parser.hpp"
+#include "evaluator/evaluator.hpp"
 #include "token/token.hpp"
 #include <iostream>
 #include <string>
@@ -44,6 +45,10 @@ void init_repl()
 			continue;
 		}
 
-		std::cout << program->get_string() << "\n";
+		auto evaluated = evaluator::eval(program.get());
+		if (evaluated != nullptr)
+		{
+			std::cout << evaluated->inspect() << "\n";
+		}
 	}
 }
