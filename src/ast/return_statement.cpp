@@ -16,3 +16,8 @@ std::string ast::ReturnStatement::get_string()
 	result += ";";
 	return result;
 }
+
+void ast::ReturnStatement::set_return_value(std::unique_ptr<ast::Expression> val)
+{
+	return_value = std::move(val);
+}

@@ -14,6 +14,8 @@ namespace ast
 		virtual std::string token_literal();
 		virtual std::string get_string();
 
+		void set_return_value(std::unique_ptr<Expression> val);
+
 	private:
 		Token token;							  // the return token
 		std::unique_ptr<Expression> return_value; // the expression which has to be calculated and returned
