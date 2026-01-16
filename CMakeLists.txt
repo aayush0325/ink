@@ -18,12 +18,38 @@ list(FILTER LIB_FILES EXCLUDE REGEX ".*main\\.cpp$")
 add_library(interpretr_lib STATIC ${LIB_FILES})
 
 # STEP 3: Create the main executable
-# Links only src/main.cpp + the library
+# Links only src/main.cpp + the.library
 add_executable(ink src/main.cpp)
 target_link_libraries(ink interpretr_lib)
 
 # STEP 4: Collect test files (excluding main.cpp from src/)
-file(GLOB_RECURSE TEST_FILES tests/*.cpp)
+set(TEST_FILES
+    tests/main.cpp
+    tests/parser/test_boolean_expressions.cpp
+    tests/parser/test_call_expressions.cpp
+    tests/parser/test_function_literal.cpp
+    tests/parser/test_grouped_expressions.cpp
+    tests/parser/test_ident_expressions.cpp
+    tests/parser/test_if_expressions.cpp
+    tests/parser/test_infix_expressions.cpp
+    tests/parser/test_integer_expressions.cpp
+    tests/parser/test_let_statement_noexpr.cpp
+    tests/parser/test_operator_precedence.cpp
+    tests/parser/test_prefix_expressions.cpp
+    tests/parser/test_return_statement.cpp
+    tests/parser/test_utils.cpp
+    tests/lexer/basic_tokens.cpp
+    tests/lexer/code_complex.cpp
+    tests/lexer/full_code.cpp
+    tests/evaluator/test_boolean_evaluation.cpp
+    tests/evaluator/test_if_else_evaluation.cpp
+    tests/evaluator/test_if_else_integer_evaluation.cpp
+    tests/evaluator/test_integer_evaluation.cpp
+    tests/ast/test_identifier.cpp
+    tests/ast/test_let_statement.cpp
+    tests/ast/test_program.cpp
+    tests/ast/test_return_statement.cpp
+)
 
 find_package(GTest CONFIG REQUIRED)
 
