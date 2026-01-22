@@ -9,3 +9,8 @@ std::string Null::inspect()
 {
 	return "null";
 }
+
+std::unique_ptr<Object> Null::clone() const
+{
+	return std::make_unique<Null>();
+}

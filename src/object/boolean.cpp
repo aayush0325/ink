@@ -9,3 +9,8 @@ std::string Boolean::inspect()
 {
 	return value ? "true" : "false";
 }
+
+std::unique_ptr<Object> Boolean::clone() const
+{
+	return std::make_unique<Boolean>(value);
+}

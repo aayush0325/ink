@@ -11,8 +11,9 @@ namespace ast
 	class Program : public Node
 	{
 	public:
-		virtual std::string token_literal();
-		virtual std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 
 		Program()
 		{

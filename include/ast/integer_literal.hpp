@@ -12,8 +12,9 @@ namespace ast
 		Token token;
 
 	public:
-		std::string token_literal();
-		std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 
 		IntegerLiteral(Token token) : token(token) {}
 

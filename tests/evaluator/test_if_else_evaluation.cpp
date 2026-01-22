@@ -20,7 +20,8 @@ static std::unique_ptr<Object> testEval(const std::string &input)
 	Parser parser(std::move(lexer));
 	auto program = parser.parse_program();
 	check_parser_errors(parser);
-	return evaluator::eval(program.get());
+	auto env = std::make_shared<Environment>();
+	return evaluator::eval(program.get(), env);
 }
 
 // Helper function to test integer object

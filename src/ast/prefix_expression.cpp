@@ -22,3 +22,15 @@ void ast::PrefixExpression::set_right_expression(std::unique_ptr<ast::Expression
 {
 	right_expression = std::move(expr);
 }
+
+std::unique_ptr<ast::Node> ast::PrefixExpression::clone() const
+{
+	auto clone = std::make_unique<PrefixExpression>(token, prefix_operator);
+	if (right_expression)
+	{
+		// Cast unique_ptr<Node> back to unique_ptr<Expression>
+		auto right_clone = right_expression->clone();
+		clone->set_right_expression(std::unique_ptr<Expression>(static_cast<Expression *>(right_clone.release())));
+	}
+	return clone;
+}

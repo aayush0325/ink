@@ -8,8 +8,9 @@ namespace ast
 	class BlockStatement : public ast::Statement
 	{
 	public:
-		std::string token_literal();
-		std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 
 		BlockStatement(Token token) : token(token) {}
 

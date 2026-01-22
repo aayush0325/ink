@@ -12,4 +12,5 @@ public:
 
 	object_type get_type() override;
 	std::string inspect() override;
+	std::unique_ptr<Object> clone() const override;
 };

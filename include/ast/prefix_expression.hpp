@@ -13,8 +13,9 @@ namespace ast
 		std::unique_ptr<Expression> right_expression;
 
 	public:
-		std::string get_string();
-		std::string token_literal();
+		virtual std::string get_string() override;
+		virtual std::string token_literal() override;
+		virtual std::unique_ptr<Node> clone() const override;
 		void set_right_expression(std::unique_ptr<ast::Expression> expr);
 
 		// Getter methods for testing

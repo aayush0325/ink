@@ -9,8 +9,9 @@ namespace ast
 	class Identifier : public Expression
 	{
 	public:
-		virtual std::string token_literal();
-		virtual std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 		Identifier(Token token, std::string identifier_name) : token(token), identifier_name(identifier_name) {}
 		Identifier() {}
 

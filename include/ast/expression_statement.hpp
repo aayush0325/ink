@@ -10,8 +10,9 @@ namespace ast
 	class ExpressionStatement : public Statement
 	{
 	public:
-		virtual std::string token_literal();
-		virtual std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 		std::unique_ptr<Expression> expression;
 
 		explicit ExpressionStatement(Token token) : token(token) {}

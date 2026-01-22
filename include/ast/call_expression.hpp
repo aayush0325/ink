@@ -10,8 +10,9 @@ namespace ast
 	class CallExpression : public Expression
 	{
 	public:
-		std::string get_string();
-		std::string token_literal();
+		virtual std::string get_string() override;
+		virtual std::string token_literal() override;
+		virtual std::unique_ptr<Node> clone() const override;
 
 		// Getter methods for testing
 		const std::unique_ptr<Expression> &get_function() const { return function; }

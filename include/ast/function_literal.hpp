@@ -10,8 +10,9 @@ namespace ast
 	class FunctionLiteral : public Expression
 	{
 	public:
-		std::string get_string();
-		std::string token_literal();
+		virtual std::string get_string() override;
+		virtual std::string token_literal() override;
+		virtual std::unique_ptr<Node> clone() const override;
 
 		// Getter methods for testing
 		const std::vector<std::unique_ptr<ast::Identifier>> &get_parameters() const { return parameters; }

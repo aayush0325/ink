@@ -18,6 +18,7 @@ void print_parser_errors(const std::vector<std::string> &errors)
 void init_repl()
 {
 	std::string input;
+	auto env = std::make_shared<Environment>();
 	while (true)
 	{
 		std::cout << PROMPT;
@@ -45,7 +46,7 @@ void init_repl()
 			continue;
 		}
 
-		auto evaluated = evaluator::eval(program.get());
+		auto evaluated = evaluator::eval(program.get(), env);
 		if (evaluated != nullptr)
 		{
 			std::cout << evaluated->inspect() << "\n";

@@ -42,7 +42,10 @@ set(TEST_FILES
     tests/lexer/code_complex.cpp
     tests/lexer/full_code.cpp
     tests/evaluator/test_boolean_evaluation.cpp
+    tests/evaluator/test_error_handling.cpp
     tests/evaluator/test_if_else_evaluation.cpp
+    tests/evaluator/test_let_statements.cpp
+    tests/evaluator/test_functions.cpp
     tests/evaluator/test_if_else_integer_evaluation.cpp
     tests/evaluator/test_integer_evaluation.cpp
     tests/ast/test_identifier.cpp

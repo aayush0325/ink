@@ -11,11 +11,13 @@ namespace ast
 	class LetStatement : public Statement
 	{
 	public:
-		virtual std::string token_literal();
-		virtual std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 		explicit LetStatement(Token token) : token(token), ident(nullptr), value(nullptr) {}
 
 		void set_value(std::unique_ptr<Expression> expr);
+		const std::unique_ptr<Expression> &get_value() const { return value; }
 
 		std::unique_ptr<Identifier> ident;
 

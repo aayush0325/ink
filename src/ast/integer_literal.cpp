@@ -10,6 +10,13 @@ std::string ast::IntegerLiteral::get_string()
 	return token.literal;
 }
 
+std::unique_ptr<ast::Node> ast::IntegerLiteral::clone() const
+{
+	auto clone = std::make_unique<IntegerLiteral>(token);
+	clone->integer_value = this->integer_value;
+	return clone;
+}
+
 bool ast::IntegerLiteral::set_integer_value_from_token()
 {
 	try

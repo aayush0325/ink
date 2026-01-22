@@ -11,10 +11,12 @@ namespace ast
 	{
 	public:
 		ReturnStatement(Token token) : token(token), return_value(nullptr) {}
-		virtual std::string token_literal();
-		virtual std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 
 		void set_return_value(std::unique_ptr<Expression> val);
+		const std::unique_ptr<Expression> &get_return_value() const { return return_value; }
 
 	private:
 		Token token;							  // the return token

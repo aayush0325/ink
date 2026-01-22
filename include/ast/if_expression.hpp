@@ -9,8 +9,9 @@ namespace ast
 	class IfExpression : public Expression
 	{
 	public:
-		std::string token_literal();
-		std::string get_string();
+		virtual std::string token_literal() override;
+		virtual std::string get_string() override;
+		virtual std::unique_ptr<Node> clone() const override;
 		void set_condition(std::unique_ptr<Expression> condition);
 		void set_consequence(std::unique_ptr<BlockStatement> consequence);
 		void set_alternative(std::unique_ptr<BlockStatement> alternative);

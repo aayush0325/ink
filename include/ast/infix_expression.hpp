@@ -9,8 +9,9 @@ namespace ast
 	class InfixExpression : public Expression
 	{
 	public:
-		std::string get_string();
-		std::string token_literal();
+		virtual std::string get_string() override;
+		virtual std::string token_literal() override;
+		virtual std::unique_ptr<Node> clone() const override;
 
 		explicit InfixExpression(Token infix_token, std::unique_ptr<Expression> left, std::string infix_operator)
 			: infix_token(infix_token), left(std::move(left)), right(nullptr), infix_operator(infix_operator) {}

@@ -3,15 +3,9 @@
 #include "lexer/lexer.hpp"
 #include "tests/parser/test.hpp"
 #include "object/integer.hpp"
-#include "object/boolean.hpp"
-#include "object/null.hpp"
+#include "object/environment.hpp"
 #include <gtest/gtest.h>
-#include <string>
-#include <vector>
 #include <memory>
-#include <typeinfo>
-#include <iostream>
-#include <sstream>
 
 // Helper function to evaluate input string
 static std::unique_ptr<Object> testEval(const std::string &input)
@@ -33,44 +27,25 @@ static void testIntegerObject(Object *obj, int64_t expected)
 	EXPECT_EQ(integer_obj->value, expected);
 }
 
-// Helper function to test null object
-static void testNullObject(Object *obj)
-{
-	auto *null_obj = dynamic_cast<Null *>(obj);
-	ASSERT_NE(null_obj, nullptr) << "object is not NULL";
-}
-
-TEST(EvaluatorTest, IfElseExpressionsInteger)
+TEST(EvaluatorTest, LetStatements)
 {
 	struct TestCase
 	{
 		std::string input;
-		int64_t expected_int;
-		bool is_null;
+		int64_t expected;
 	};
 
 	std::vector<TestCase> tests = {
-		{"if (true) { 10 }", 10, false},
-		{"if (false) { 10 }", 0, true},
-		{"if (1) { 10 }", 10, false},
-		{"if (1 < 2) { 10 }", 10, false},
-		{"if (1 > 2) { 10 }", 0, true},
-		{"if (1 > 2) { 10 } else { 20 }", 20, false},
-		{"if (1 < 2) { 10 } else { 20 }", 10, false},
+		{"let a = 5; a;", 5},
+		{"let a = 5 * 5; a;", 25},
+		{"let a = 5; let b = a; b;", 5},
+		{"let a = 5; let b = a; let c = a + b + 5; c;", 15},
 	};
 
 	for (const auto &tt : tests)
 	{
 		auto evaluated = testEval(tt.input);
-		ASSERT_NE(evaluated, nullptr) << "Evaluator returned nullptr";
-
-		if (!tt.is_null)
-		{
-			testIntegerObject(evaluated.get(), tt.expected_int);
-		}
-		else
-		{
-			testNullObject(evaluated.get());
-		}
+		ASSERT_NE(evaluated, nullptr) << "Evaluator returned nullptr for input: " << tt.input;
+		testIntegerObject(evaluated.get(), tt.expected);
 	}
 }
