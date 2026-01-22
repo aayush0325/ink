@@ -91,6 +91,16 @@ Parser::Parser(std::unique_ptr<Lexer> l) : lexer(std::move(l))
 								   return infix_parse_infix_expression(std::move(left));
 							   }});
 
+	infix_lookup_table.insert({TokenType::LTE, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
+	infix_lookup_table.insert({TokenType::GTE, [this](std::unique_ptr<ast::Expression> left)
+							   {
+								   return infix_parse_infix_expression(std::move(left));
+							   }});
+
 	infix_lookup_table.insert({TokenType::LPAREN, [this](std::unique_ptr<ast::Expression> left)
 							   {
 								   return infix_parse_call_expression(std::move(left));

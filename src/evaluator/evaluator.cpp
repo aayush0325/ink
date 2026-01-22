@@ -160,6 +160,14 @@ namespace evaluator
 		{
 			return nativeBoolToBooleanObject(left_val > right_val);
 		}
+		else if (operator_str == ">=")
+		{
+			return nativeBoolToBooleanObject(left_val >= right_val);
+		}
+		else if (operator_str == "<=")
+		{
+			return nativeBoolToBooleanObject(left_val <= right_val);
+		}
 		else if (operator_str == "==")
 		{
 			return nativeBoolToBooleanObject(left_val == right_val);

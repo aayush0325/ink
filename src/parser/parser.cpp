@@ -5,6 +5,8 @@ const std::map<TokenType, Precedence> Parser::precedences = {
 	{TokenType::NEQ, EQUALS},
 	{TokenType::LT, LESSGREATER},
 	{TokenType::GT, LESSGREATER},
+	{TokenType::LTE, LESSGREATER},
+	{TokenType::GTE, LESSGREATER},
 	{TokenType::PLUS, SUM},
 	{TokenType::MINUS, SUM},
 	{TokenType::SLASH, PRODUCT},

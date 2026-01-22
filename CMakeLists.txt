@@ -18,9 +18,15 @@ list(FILTER LIB_FILES EXCLUDE REGEX ".*main\\.cpp$")
 add_library(interpretr_lib STATIC ${LIB_FILES})
 
 # STEP 3: Create the main executable
-# Links only src/main.cpp + the.library
+# Links only src/main.cpp + the library
 add_executable(ink src/main.cpp)
-target_link_libraries(ink interpretr_lib)
+
+# Find Readline
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(READLINE REQUIRED readline)
+
+target_link_libraries(ink interpretr_lib ${READLINE_LIBRARIES})
+target_link_libraries(interpretr_lib ${READLINE_LIBRARIES})
 
 # STEP 4: Collect test files (excluding main.cpp from src/)
 set(TEST_FILES
