@@ -50,6 +50,12 @@ TEST(EvaluatorTest, BooleanExpression)
 		{"1 != 1", false},
 		{"1 == 2", false},
 		{"1 != 2", true},
+		{"!true", false},
+		{"!false", true},
+		{"!5", false},
+		{"!!true", true},
+		{"!!false", false},
+		{"!!5", true},
 	};
 
 	for (const auto &tt : tests)
