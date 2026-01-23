@@ -11,7 +11,10 @@
 class Function : public Object
 {
 public:
-	Function(std::vector<std::unique_ptr<ast::Identifier>> params, std::unique_ptr<ast::BlockStatement> body, std::shared_ptr<Environment> env);
+	Function(
+		std::vector<std::unique_ptr<ast::Identifier>> params,
+		std::unique_ptr<ast::BlockStatement> body,
+		std::shared_ptr<Environment> env);
 
 	object_type get_type() override;
 	std::string inspect() override;

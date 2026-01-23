@@ -73,8 +73,13 @@ private:
 	std::unique_ptr<ast::Expression> prefix_parse_integer_literal();
 	std::unique_ptr<ast::Expression> prefix_parse_prefix_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_boolean_literal();
-	std::unique_ptr<ast::Expression> infix_parse_infix_expression(std::unique_ptr<ast::Expression> left);
-	std::unique_ptr<ast::Expression> infix_parse_call_expression(std::unique_ptr<ast::Expression> left);
+
+	std::unique_ptr<ast::Expression> infix_parse_infix_expression(
+		std::unique_ptr<ast::Expression> left);
+
+	std::unique_ptr<ast::Expression> infix_parse_call_expression(
+		std::unique_ptr<ast::Expression> left);
+
 	std::unique_ptr<ast::Expression> prefix_parse_grouped_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_if_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_function_literal();

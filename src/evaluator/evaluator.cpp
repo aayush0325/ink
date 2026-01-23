@@ -88,6 +88,10 @@ namespace evaluator
 				if (result->get_type() == RETURN_VALUE_OBJ ||
 					result->get_type() == ERROR_OBJ)
 				{
+					// Encountered a result/error in a nested block statement...
+					// Returning result here will notify the `eval_program()`
+					// function that the nested block has returned a value
+					// and hence that will be used to signify the return value.
 					return result;
 				}
 			}
@@ -110,6 +114,7 @@ namespace evaluator
 			{
 				if (result->get_type() == RETURN_VALUE_OBJ)
 				{
+					// If we encounter a return value then stop execution...
 					auto *return_val = dynamic_cast<ReturnValue *>(result.get());
 					return std::move(return_val->value);
 				}
@@ -164,20 +169,25 @@ namespace evaluator
 	// Helper function to evaluate integer infix expressions
 	static std::unique_ptr<Object> eval_int_infix_expr(
 		const std::string &operator_str,
-		Object *left, Object *right)
+		Object *left,
+		Object *right)
 	{
+		// Cast to Integer objects
 		auto *left_int = dynamic_cast<Integer *>(left);
 		auto *right_int = dynamic_cast<Integer *>(right);
 
+		// Verify for type mismatch
 		if (!left_int || !right_int)
 		{
-			return new_error("type mismatch: {} {} {}", left->get_type(),
-							 operator_str, right->get_type());
+			return new_error("type mismatch: {} {} {}",
+							 left->get_type(), operator_str, right->get_type());
 		}
 
+		// Extract values
 		int64_t left_val = left_int->value;
 		int64_t right_val = right_int->value;
 
+		// Do the specified operation
 		if (operator_str == "+")
 		{
 			return std::make_unique<Integer>(left_val + right_val);
@@ -219,14 +229,16 @@ namespace evaluator
 			return native_bool_to_bool_object(left_val != right_val);
 		}
 
-		return new_error("unknown operator: {} {} {}", left->get_type(),
-						 operator_str, right->get_type());
+		// Unknown operator
+		return new_error("unknown operator: {} {} {}",
+						 left->get_type(), operator_str, right->get_type());
 	}
 
 	// Helper function to evaluate infix expressions
 	static std::unique_ptr<Object> eval_infix_expr(
 		const std::string &operator_str,
-		Object *left, Object *right)
+		Object *left,
+		Object *right)
 	{
 		if (left->get_type() == INTEGER_OBJ && right->get_type() == INTEGER_OBJ)
 		{
@@ -235,12 +247,12 @@ namespace evaluator
 
 		if (left->get_type() != right->get_type())
 		{
-			return new_error("type mismatch: {} {} {}", left->get_type(),
-							 operator_str, right->get_type());
+			return new_error("type mismatch: {} {} {}",
+							 left->get_type(), operator_str, right->get_type());
 		}
 
-		return new_error("unknown operator: {} {} {}", left->get_type(),
-						 operator_str, right->get_type());
+		return new_error("unknown operator: {} {} {}",
+						 left->get_type(), operator_str, right->get_type());
 	}
 
 	// Helper function to check if an object is truthy
@@ -421,10 +433,12 @@ namespace evaluator
 		if (auto *prefix_expr = dynamic_cast<ast::PrefixExpression *>(node))
 		{
 			auto right = eval(prefix_expr->get_right_expression().get(), env);
+
 			if (is_error(right.get()))
 			{
 				return right;
 			}
+
 			return eval_prefix_expression(
 				prefix_expr->get_prefix_operator(), right.get());
 		}
@@ -432,17 +446,22 @@ namespace evaluator
 		if (auto *infix_expr = dynamic_cast<ast::InfixExpression *>(node))
 		{
 			auto left = eval(infix_expr->get_left().get(), env);
+
 			if (is_error(left.get()))
 			{
 				return left;
 			}
+
 			auto right = eval(infix_expr->get_right().get(), env);
+
 			if (is_error(right.get()))
 			{
 				return right;
 			}
+
 			return eval_infix_expr(infix_expr->get_operator(),
-								   left.get(), right.get());
+								   left.get(),
+								   right.get());
 		}
 
 		if (auto *block_stmt = dynamic_cast<ast::BlockStatement *>(node))
