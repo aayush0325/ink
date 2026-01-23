@@ -31,13 +31,15 @@ std::unique_ptr<ast::Node> ast::CallExpression::clone() const
 	if (function)
 	{
 		auto func_clone = function->clone();
-		clone->set_function(std::unique_ptr<Expression>(static_cast<Expression *>(func_clone.release())));
+		clone->set_function(std::unique_ptr<Expression>(
+			static_cast<Expression *>(func_clone.release())));
 	}
 	std::vector<std::unique_ptr<Expression>> args_clone;
 	for (const auto &arg : arguments)
 	{
 		auto arg_clone = arg->clone();
-		args_clone.push_back(std::unique_ptr<Expression>(static_cast<Expression *>(arg_clone.release())));
+		args_clone.push_back(std::unique_ptr<Expression>(
+			static_cast<Expression *>(arg_clone.release())));
 	}
 	clone->set_arguments(std::move(args_clone));
 	return clone;

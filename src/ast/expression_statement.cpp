@@ -19,7 +19,8 @@ std::unique_ptr<ast::Node> ast::ExpressionStatement::clone() const
 	if (expression)
 	{
 		auto expr_clone = expression->clone();
-		clone->expression = std::unique_ptr<Expression>(static_cast<Expression *>(expr_clone.release()));
+		clone->expression = std::unique_ptr<Expression>(
+			static_cast<Expression *>(expr_clone.release()));
 	}
 	return clone;
 }

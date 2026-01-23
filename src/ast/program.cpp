@@ -22,7 +22,8 @@ std::unique_ptr<ast::Node> ast::Program::clone() const
 	for (const auto &stmt : statements)
 	{
 		auto stmt_clone = stmt->clone();
-		clone->statements.push_back(std::unique_ptr<Statement>(static_cast<Statement *>(stmt_clone.release())));
+		clone->statements.push_back(std::unique_ptr<Statement>(
+			static_cast<Statement *>(stmt_clone.release())));
 	}
 	return clone;
 }

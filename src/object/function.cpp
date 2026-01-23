@@ -1,6 +1,9 @@
 #include "object/function.hpp"
 
-Function::Function(std::vector<std::unique_ptr<ast::Identifier>> params, std::unique_ptr<ast::BlockStatement> body, std::shared_ptr<Environment> env)
+Function::Function(
+	std::vector<std::unique_ptr<ast::Identifier>> params,
+	std::unique_ptr<ast::BlockStatement> body,
+	std::shared_ptr<Environment> env)
 	: parameters(std::move(params)), body(std::move(body)), env(env) {}
 
 object_type Function::get_type()
@@ -32,11 +35,14 @@ std::unique_ptr<Object> Function::clone() const
 	for (const auto &param : parameters)
 	{
 		auto p_clone = param->clone();
-		params_clone.push_back(std::unique_ptr<ast::Identifier>(static_cast<ast::Identifier *>(p_clone.release())));
+		params_clone.push_back(std::unique_ptr<ast::Identifier>(
+			static_cast<ast::Identifier *>(p_clone.release())));
 	}
 
 	auto body_clone = body->clone();
-	auto body_ptr = std::unique_ptr<ast::BlockStatement>(static_cast<ast::BlockStatement *>(body_clone.release()));
+	auto body_ptr = std::unique_ptr<ast::BlockStatement>(
+		static_cast<ast::BlockStatement *>(body_clone.release()));
 
-	return std::make_unique<Function>(std::move(params_clone), std::move(body_ptr), env);
+	return std::make_unique<Function>(
+		std::move(params_clone), std::move(body_ptr), env);
 }

@@ -45,7 +45,9 @@ TEST(EvaluatorTest, LetStatements)
 	for (const auto &tt : tests)
 	{
 		auto evaluated = testEval(tt.input);
-		ASSERT_NE(evaluated, nullptr) << "Evaluator returned nullptr for input: " << tt.input;
+		ASSERT_NE(evaluated, nullptr)
+			<< "Evaluator returned nullptr for input: "
+			<< tt.input;
 		testIntegerObject(evaluated.get(), tt.expected);
 	}
 }

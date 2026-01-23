@@ -34,14 +34,20 @@ std::vector<std::unique_ptr<ast::Identifier>> Parser::parse_function_parameters(
 	}
 
 	next_token();
-	auto ident = std::make_unique<ast::Identifier>(current_token, current_token.literal);
+
+	auto ident = std::make_unique<ast::Identifier>(
+		current_token, current_token.literal);
+
 	identifiers.push_back(std::move(ident));
 
 	while (peek_token.type == TokenType::COMMA)
 	{
 		next_token(); // consume comma
 		next_token(); // consume identifier
-		auto ident = std::make_unique<ast::Identifier>(current_token, current_token.literal);
+
+		auto ident = std::make_unique<ast::Identifier>(
+			current_token, current_token.literal);
+
 		identifiers.push_back(std::move(ident));
 	}
 

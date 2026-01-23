@@ -31,12 +31,14 @@ std::unique_ptr<ast::Node> ast::LetStatement::clone() const
 	if (ident)
 	{
 		auto ident_clone = ident->clone();
-		clone->ident = std::unique_ptr<Identifier>(static_cast<Identifier *>(ident_clone.release()));
+		clone->ident = std::unique_ptr<Identifier>(static_cast<Identifier *>(
+			ident_clone.release()));
 	}
 	if (value)
 	{
 		auto val_clone = value->clone();
-		clone->set_value(std::unique_ptr<Expression>(static_cast<Expression *>(val_clone.release())));
+		clone->set_value(std::unique_ptr<Expression>(static_cast<Expression *>(
+			val_clone.release())));
 	}
 	return clone;
 }

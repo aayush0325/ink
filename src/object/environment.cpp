@@ -20,7 +20,8 @@ std::unique_ptr<Object> Environment::get(const std::string &name)
 	return nullptr;
 }
 
-std::shared_ptr<Environment> Environment::NewEnclosedEnvironment(std::shared_ptr<Environment> outer)
+std::shared_ptr<Environment> Environment::NewEnclosedEnvironment(
+	std::shared_ptr<Environment> outer)
 {
 	return std::make_shared<Environment>(outer);
 }

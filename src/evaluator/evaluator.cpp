@@ -27,10 +27,20 @@
 namespace evaluator
 {
 	// Forward declarations
-	static std::unique_ptr<Object> eval_identifier(ast::Identifier *node, std::shared_ptr<Environment> env);
-	static std::unique_ptr<Object> apply_function(Object *fn, const std::vector<std::unique_ptr<Object>> &args);
-	static std::shared_ptr<Environment> extend_function_env(Function *fn, const std::vector<std::unique_ptr<Object>> &args);
-	static std::unique_ptr<Object> unwrap_return_value(std::unique_ptr<Object> obj);
+	static std::unique_ptr<Object> eval_identifier(
+		ast::Identifier *node,
+		std::shared_ptr<Environment> env);
+
+	static std::unique_ptr<Object> apply_function(
+		Object *fn,
+		const std::vector<std::unique_ptr<Object>> &args);
+
+	static std::shared_ptr<Environment> extend_function_env(
+		Function *fn,
+		const std::vector<std::unique_ptr<Object>> &args);
+
+	static std::unique_ptr<Object> unwrap_return_value(
+		std::unique_ptr<Object> obj);
 
 	// Helper function to get NULL object
 	static std::unique_ptr<Object> getNull()
@@ -46,9 +56,11 @@ namespace evaluator
 
 	// Helper function to create a new Error object
 	template <typename... Args>
-	static std::unique_ptr<Object> new_error(std::string_view format_str, Args &&...args)
+	static std::unique_ptr<Object> new_error(std::string_view format_str,
+											 Args &&...args)
 	{
-		return std::make_unique<Error>(std::vformat(format_str, std::make_format_args(args...)));
+		return std::make_unique<Error>(
+			std::vformat(format_str, std::make_format_args(args...)));
 	}
 
 	// Helper function to check if an object is an error
@@ -62,7 +74,9 @@ namespace evaluator
 	}
 
 	// Helper function to evaluate a list of statements (for BlockStatement)
-	static std::unique_ptr<Object> eval_block_stmt(const std::vector<std::unique_ptr<ast::Statement>> &statements, std::shared_ptr<Environment> env)
+	static std::unique_ptr<Object> eval_block_stmt(
+		const std::vector<std::unique_ptr<ast::Statement>> &statements,
+		std::shared_ptr<Environment> env)
 	{
 		std::unique_ptr<Object> result = nullptr;
 
@@ -71,7 +85,8 @@ namespace evaluator
 			result = eval(statement.get(), env);
 			if (result != nullptr)
 			{
-				if (result->get_type() == RETURN_VALUE_OBJ || result->get_type() == ERROR_OBJ)
+				if (result->get_type() == RETURN_VALUE_OBJ ||
+					result->get_type() == ERROR_OBJ)
 				{
 					return result;
 				}
@@ -82,7 +97,9 @@ namespace evaluator
 	}
 
 	// Helper function to evaluate a program
-	static std::unique_ptr<Object> eval_program(const std::vector<std::unique_ptr<ast::Statement>> &statements, std::shared_ptr<Environment> env)
+	static std::unique_ptr<Object> eval_program(
+		const std::vector<std::unique_ptr<ast::Statement>> &statements,
+		std::shared_ptr<Environment> env)
 	{
 		std::unique_ptr<Object> result = nullptr;
 
@@ -122,7 +139,9 @@ namespace evaluator
 	}
 
 	// Helper function to evaluate prefix expressions
-	static std::unique_ptr<Object> eval_prefix_expression(const std::string &operator_str, Object *right)
+	static std::unique_ptr<Object> eval_prefix_expression(
+		const std::string &operator_str,
+		Object *right)
 	{
 		if (operator_str == "!")
 		{
@@ -138,18 +157,22 @@ namespace evaluator
 			return new_error("unknown operator: -{}", right->get_type());
 		}
 
-		return new_error("unknown operator: {}{}", operator_str, right->get_type());
+		return new_error("unknown operator: {}{}",
+						 operator_str, right->get_type());
 	}
 
 	// Helper function to evaluate integer infix expressions
-	static std::unique_ptr<Object> eval_int_infix_expr(const std::string &operator_str, Object *left, Object *right)
+	static std::unique_ptr<Object> eval_int_infix_expr(
+		const std::string &operator_str,
+		Object *left, Object *right)
 	{
 		auto *left_int = dynamic_cast<Integer *>(left);
 		auto *right_int = dynamic_cast<Integer *>(right);
 
 		if (!left_int || !right_int)
 		{
-			return new_error("type mismatch: {} {} {}", left->get_type(), operator_str, right->get_type());
+			return new_error("type mismatch: {} {} {}", left->get_type(),
+							 operator_str, right->get_type());
 		}
 
 		int64_t left_val = left_int->value;
@@ -196,11 +219,14 @@ namespace evaluator
 			return native_bool_to_bool_object(left_val != right_val);
 		}
 
-		return new_error("unknown operator: {} {} {}", left->get_type(), operator_str, right->get_type());
+		return new_error("unknown operator: {} {} {}", left->get_type(),
+						 operator_str, right->get_type());
 	}
 
 	// Helper function to evaluate infix expressions
-	static std::unique_ptr<Object> eval_infix_expr(const std::string &operator_str, Object *left, Object *right)
+	static std::unique_ptr<Object> eval_infix_expr(
+		const std::string &operator_str,
+		Object *left, Object *right)
 	{
 		if (left->get_type() == INTEGER_OBJ && right->get_type() == INTEGER_OBJ)
 		{
@@ -209,10 +235,12 @@ namespace evaluator
 
 		if (left->get_type() != right->get_type())
 		{
-			return new_error("type mismatch: {} {} {}", left->get_type(), operator_str, right->get_type());
+			return new_error("type mismatch: {} {} {}", left->get_type(),
+							 operator_str, right->get_type());
 		}
 
-		return new_error("unknown operator: {} {} {}", left->get_type(), operator_str, right->get_type());
+		return new_error("unknown operator: {} {} {}", left->get_type(),
+						 operator_str, right->get_type());
 	}
 
 	// Helper function to check if an object is truthy
@@ -230,7 +258,9 @@ namespace evaluator
 	}
 
 	// Helper function to evaluate identifiers
-	static std::unique_ptr<Object> eval_identifier(ast::Identifier *node, std::shared_ptr<Environment> env)
+	static std::unique_ptr<Object> eval_identifier(
+		ast::Identifier *node,
+		std::shared_ptr<Environment> env)
 	{
 		auto val = env->get(node->identifier_name);
 		if (val)
@@ -252,7 +282,9 @@ namespace evaluator
 	}
 
 	// Helper function to evaluate if expression
-	static std::unique_ptr<Object> eval_if_expr(ast::IfExpression *ie, std::shared_ptr<Environment> env)
+	static std::unique_ptr<Object> eval_if_expr(
+		ast::IfExpression *ie,
+		std::shared_ptr<Environment> env)
 	{
 		auto condition = eval(ie->get_condition().get(), env);
 		if (is_error(condition.get()))
@@ -275,7 +307,9 @@ namespace evaluator
 	}
 
 	// Helper function to evaluate expressions
-	static std::vector<std::unique_ptr<Object>> eval_expressions(const std::vector<std::unique_ptr<ast::Expression>> &exps, std::shared_ptr<Environment> env)
+	static std::vector<std::unique_ptr<Object>> eval_expressions(
+		const std::vector<std::unique_ptr<ast::Expression>> &exps,
+		std::shared_ptr<Environment> env)
 	{
 		std::vector<std::unique_ptr<Object>> result;
 
@@ -294,7 +328,9 @@ namespace evaluator
 		return result;
 	}
 
-	static std::unique_ptr<Object> apply_function(Object *fn, const std::vector<std::unique_ptr<Object>> &args)
+	static std::unique_ptr<Object> apply_function(
+		Object *fn,
+		const std::vector<std::unique_ptr<Object>> &args)
 	{
 		auto *function = dynamic_cast<Function *>(fn);
 		if (!function)
@@ -307,7 +343,9 @@ namespace evaluator
 		return unwrap_return_value(std::move(evaluated));
 	}
 
-	static std::shared_ptr<Environment> extend_function_env(Function *fn, const std::vector<std::unique_ptr<Object>> &args)
+	static std::shared_ptr<Environment> extend_function_env(
+		Function *fn,
+		const std::vector<std::unique_ptr<Object>> &args)
 	{
 		auto env = Environment::NewEnclosedEnvironment(fn->env);
 
@@ -319,7 +357,8 @@ namespace evaluator
 		return env;
 	}
 
-	static std::unique_ptr<Object> unwrap_return_value(std::unique_ptr<Object> obj)
+	static std::unique_ptr<Object> unwrap_return_value(
+		std::unique_ptr<Object> obj)
 	{
 		if (auto *returnValue = dynamic_cast<ReturnValue *>(obj.get()))
 		{
@@ -328,7 +367,8 @@ namespace evaluator
 		return obj;
 	}
 
-	std::unique_ptr<Object> eval(ast::Node *node, std::shared_ptr<Environment> env)
+	std::unique_ptr<Object> eval(
+		ast::Node *node, std::shared_ptr<Environment> env)
 	{
 		// Statements
 		if (auto *program = dynamic_cast<ast::Program *>(node))
@@ -385,7 +425,8 @@ namespace evaluator
 			{
 				return right;
 			}
-			return eval_prefix_expression(prefix_expr->get_prefix_operator(), right.get());
+			return eval_prefix_expression(
+				prefix_expr->get_prefix_operator(), right.get());
 		}
 
 		if (auto *infix_expr = dynamic_cast<ast::InfixExpression *>(node))
@@ -400,7 +441,8 @@ namespace evaluator
 			{
 				return right;
 			}
-			return eval_infix_expr(infix_expr->get_operator(), left.get(), right.get());
+			return eval_infix_expr(infix_expr->get_operator(),
+								   left.get(), right.get());
 		}
 
 		if (auto *block_stmt = dynamic_cast<ast::BlockStatement *>(node))
@@ -419,13 +461,16 @@ namespace evaluator
 			for (const auto &p : func_lit->get_parameters())
 			{
 				auto p_clone = p->clone();
-				params.push_back(std::unique_ptr<ast::Identifier>(static_cast<ast::Identifier *>(p_clone.release())));
+				params.push_back(std::unique_ptr<ast::Identifier>(
+					static_cast<ast::Identifier *>(p_clone.release())));
 			}
 
 			auto body_clone = func_lit->get_body()->clone();
-			auto body_ptr = std::unique_ptr<ast::BlockStatement>(static_cast<ast::BlockStatement *>(body_clone.release()));
+			auto body_ptr = std::unique_ptr<ast::BlockStatement>(
+				static_cast<ast::BlockStatement *>(body_clone.release()));
 
-			return std::make_unique<Function>(std::move(params), std::move(body_ptr), env);
+			return std::make_unique<Function>(
+				std::move(params), std::move(body_ptr), env);
 		}
 
 		if (auto *call_expr = dynamic_cast<ast::CallExpression *>(node))

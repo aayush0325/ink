@@ -15,10 +15,12 @@ std::string ast::PrefixExpression::token_literal()
 	return token.literal;
 }
 
-ast::PrefixExpression::PrefixExpression(Token token, std::string prefix_operator)
+ast::PrefixExpression::PrefixExpression(
+	Token token, std::string prefix_operator)
 	: token(token), prefix_operator(prefix_operator), right_expression(nullptr) {}
 
-void ast::PrefixExpression::set_right_expression(std::unique_ptr<ast::Expression> expr)
+void ast::PrefixExpression::set_right_expression(
+	std::unique_ptr<ast::Expression> expr)
 {
 	right_expression = std::move(expr);
 }
@@ -30,7 +32,8 @@ std::unique_ptr<ast::Node> ast::PrefixExpression::clone() const
 	{
 		// Cast unique_ptr<Node> back to unique_ptr<Expression>
 		auto right_clone = right_expression->clone();
-		clone->set_right_expression(std::unique_ptr<Expression>(static_cast<Expression *>(right_clone.release())));
+		clone->set_right_expression(std::unique_ptr<Expression>(
+			static_cast<Expression *>(right_clone.release())));
 	}
 	return clone;
 }

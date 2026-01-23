@@ -68,11 +68,16 @@ TEST(EvaluatorTest, ErrorHandling)
 	for (const auto &tt : tests)
 	{
 		auto evaluated = testEval(tt.input);
-		ASSERT_NE(evaluated, nullptr) << "Evaluator returned nullptr for input: " << tt.input;
-		
+		ASSERT_NE(evaluated, nullptr)
+			<< "Evaluator returned nullptr for input: " << tt.input;
+
 		auto *errObj = dynamic_cast<Error *>(evaluated.get());
-		ASSERT_NE(errObj, nullptr) << "no error object returned. got=" << evaluated->get_type() << " for input: " << tt.input;
-		
-		EXPECT_EQ(errObj->message, tt.expectedMessage) << "wrong error message for input: " << tt.input;
+		ASSERT_NE(errObj, nullptr)
+			<< "no error object returned. got=" << evaluated->get_type()
+			<< " for input: "
+			<< tt.input;
+
+		EXPECT_EQ(errObj->message, tt.expectedMessage)
+			<< "wrong error message for input: " << tt.input;
 	}
 }

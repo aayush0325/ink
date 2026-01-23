@@ -28,7 +28,8 @@ std::unique_ptr<ast::Node> ast::ReturnStatement::clone() const
 	if (return_value)
 	{
 		auto val_clone = return_value->clone();
-		clone->set_return_value(std::unique_ptr<Expression>(static_cast<Expression *>(val_clone.release())));
+		clone->set_return_value(std::unique_ptr<Expression>(
+			static_cast<Expression *>(val_clone.release())));
 	}
 	return clone;
 }

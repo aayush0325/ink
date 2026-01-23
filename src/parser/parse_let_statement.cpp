@@ -10,7 +10,8 @@ std::unique_ptr<ast::LetStatement> Parser::parse_let_statement()
 	}
 
 	// note that expect_peek() has advanced a token
-	statement->ident = std::make_unique<ast::Identifier>(current_token, current_token.literal);
+	statement->ident = std::make_unique<ast::Identifier>(
+		current_token, current_token.literal);
 
 	if (!expect_peek(TokenType::ASSIGN))
 	{
