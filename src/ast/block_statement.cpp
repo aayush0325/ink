@@ -25,8 +25,9 @@ std::unique_ptr<ast::Node> ast::BlockStatement::clone() const
 	{
 		// Cast unique_ptr<Node> back to unique_ptr<Statement>
 		auto stmt_clone = stmt->clone();
+
 		clone->insert_statement(std::unique_ptr<Statement>(
-			static_cast<Statement *>(stmt_clone.release())));
+			static_cast<ast::Statement *>(stmt_clone.release())));
 	}
 	return clone;
 }

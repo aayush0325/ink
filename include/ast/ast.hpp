@@ -27,7 +27,7 @@ namespace ast
 	public:
 		virtual std::string token_literal() = 0;
 		virtual std::string get_string() = 0;
-		// virtual std::unique_ptr<Node> clone() const = 0; // Inherited from Node
+		virtual std::unique_ptr<Node> clone() const = 0;
 	};
 
 	// abstract base class for all expression nodes
@@ -36,6 +36,6 @@ namespace ast
 	public:
 		virtual std::string token_literal() = 0;
 		virtual std::string get_string() = 0;
-		// virtual std::unique_ptr<Node> clone() const = 0; // Inherited from Node
+		virtual std::unique_ptr<Node> clone() const = 0;
 	};
 }
