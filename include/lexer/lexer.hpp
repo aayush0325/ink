@@ -30,5 +30,7 @@ private:
 
 	std::string read_number();
 
+	std::string read_string();
+
 	char peek_char();
 };

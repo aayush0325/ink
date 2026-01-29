@@ -11,6 +11,7 @@ const object_type NULL_OBJ = "NULL";
 const object_type ERROR_OBJ = "ERROR";
 const object_type RETURN_VALUE_OBJ = "RETURN_VALUE";
 const object_type FUNCTION_OBJ = "FUNCTION";
+const object_type STRING_OBJ = "STRING";
 
 class Object
 {

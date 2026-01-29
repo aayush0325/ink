@@ -18,6 +18,7 @@
 #include "ast/if_expression.hpp"
 #include "ast/function_literal.hpp"
 #include "ast/call_expression.hpp"
+#include "ast/string_literal.hpp"
 
 enum Precedence
 {
@@ -83,6 +84,7 @@ private:
 	std::unique_ptr<ast::Expression> prefix_parse_grouped_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_if_expression();
 	std::unique_ptr<ast::Expression> prefix_parse_function_literal();
+	std::unique_ptr<ast::Expression> prefix_parse_string_literal();
 
 public:
 	explicit Parser(std::unique_ptr<Lexer> l);

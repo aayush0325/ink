@@ -42,6 +42,11 @@ std::unique_ptr<ast::Expression> Parser::prefix_parse_prefix_expression()
 	return expr;
 }
 
+std::unique_ptr<ast::Expression> Parser::prefix_parse_string_literal()
+{
+	return std::make_unique<ast::StringLiteral>(current_token);
+}
+
 std::unique_ptr<ast::Expression> Parser::prefix_parse_grouped_expression()
 {
 	next_token();

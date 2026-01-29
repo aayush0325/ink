@@ -73,6 +73,9 @@ Token Lexer::next_token()
 		else
 			tok = Token(TokenType::BANG, "!");
 		break;
+	case '"':
+		tok = Token(TokenType::STRING, read_string());
+		break;
 	case 0:
 		tok = Token(TokenType::E_O_F, "");
 		break;
@@ -107,4 +110,16 @@ void Lexer::read_char()
 
 	position = read_position;
 	read_position += 1;
+}
+
+std::string Lexer::read_string()
+{
+	u64 pos = position + 1;
+	while (true)
+	{
+		read_char();
+		if (ch == '"' || ch == 0)
+			break;
+	}
+	return input.substr(pos, position - pos);
 }

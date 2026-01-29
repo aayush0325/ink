@@ -47,6 +47,9 @@ set(TEST_FILES
     tests/lexer/basic_tokens.cpp
     tests/lexer/code_complex.cpp
     tests/lexer/full_code.cpp
+    tests/lexer/string_test.cpp
+    tests/parser/test_string_literal.cpp
+    tests/evaluator/test_string_evaluation.cpp
     tests/evaluator/test_boolean_evaluation.cpp
     tests/evaluator/test_error_handling.cpp
     tests/evaluator/test_if_else_evaluation.cpp

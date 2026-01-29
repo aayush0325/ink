@@ -41,6 +41,7 @@ enum TokenType
 	IF,		  // if
 	ELSE,	  // else
 	RETURN,	  // return
+	STRING,	  // "string"
 };
 
 class Token
